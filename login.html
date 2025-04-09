@@ -482,7 +482,7 @@
             
             <a href="password-management.html" class="forgot">Forgot password?</a>
             
-            <button type="submit" class="login-btn">Login</button>
+            <button type="submit" class="login-btn" id="login-button">Login</button>
           </form>
           
           <div class="or-divider">OR</div>
@@ -548,6 +548,20 @@
         this.click();
       }
     });
+
+      // JavaScript to handle form submission
+  document.getElementById('login-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // Prevent default form behavior
+
+    // Optional: Get the values (for future validation or authentication)
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // TODO: Add validation/auth logic here
+
+    // Redirect to homepage (for now, simulate successful login)
+    window.location.href = 'homepage.html';
+  });
   </script>
 </body>
 </html>
