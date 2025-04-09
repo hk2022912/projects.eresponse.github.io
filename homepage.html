@@ -322,31 +322,49 @@
       color: #aaa;
     }
     
-    /* Responsive styles */
+    /* Responsive styles - UPDATED to match login page style */
     @media (max-width: 768px) {
-      .header-container {
-        position: relative;
+      header .container {
+        padding: 15px 20px;
       }
       
       .hamburger {
         display: block;
       }
       
-      .nav-links {
+      nav {
         position: absolute;
-        top: 100%;
+        top: 80px;
         left: 0;
         width: 100%;
-        flex-direction: column;
         background-color: #ffeaea;
-        padding: 20px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        gap: 10px;
-        display: none;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+      
+      .nav-links {
+        position: static;
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        gap: 0;
       }
       
       .nav-links.active {
-        display: flex;
+        max-height: 300px;
+      }
+      
+      .nav-links li {
+        width: 100%;
+      }
+      
+      .nav-links a {
+        display: block;
+        width: 100%;
+        padding: 15px 20px;
+        margin: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
       }
       
       .overlay-text {
@@ -375,7 +393,7 @@
         <img src="C:\Users\hazel\E-Response\android-chrome-192x192.png" alt="E-Response Logo" class="logo" />
         <h1 class="site-title">E-Response</h1>
       </div>
-      <button class="hamburger" id="menu-toggle">☰</button>
+      <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
       <nav>
         <ul class="nav-links" id="nav-menu">
           <li><a href="homepage.html">Home</a></li>
@@ -496,7 +514,7 @@
   </footer>
 
   <script>
-    // Mobile menu toggle
+    // Mobile menu toggle - updated to match login page functionality
     document.getElementById('menu-toggle').addEventListener('click', function() {
       document.getElementById('nav-menu').classList.toggle('active');
     });
