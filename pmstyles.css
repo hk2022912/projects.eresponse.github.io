@@ -1,0 +1,146 @@
+/* Reset */
+{
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Navbar */
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffeeee;
+    padding: 10px 50px; /* Reduced padding for less space */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* space between logo and name */
+  }
+  
+  .logo img {
+    width: 60px;         /* smaller width */
+    height: 50%;        /* smaller height */
+    border-radius: 50%;  /* makes it circular */
+    object-fit: cover;   /* keeps the image nicely cropped */
+  }
+  
+  .left-logo {
+    width: 300px;           /* smaller size */
+    height: 300px;
+    border-radius: 50%;    /* make it circular */
+    object-fit: cover;     /* crop image nicely */
+    margin-bottom: 5px;   /* spacing under logo */
+  }
+  
+  .nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+  }
+  
+  /* Main Layout */
+  .container {
+    display: flex;
+    height: calc(100vh - 80px);
+  }
+  
+  /* Left Panel */
+  .left-panel {
+    background: #c62828;
+    color: #fff;
+    flex: 1;
+    text-align: center;
+    padding: 60px 30px;
+  }
+  
+  .left-panel h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .left-panel .icon {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #fff3e0;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .left-panel p {
+    font-size: 18px;
+    line-height: 1.5;
+  }
+  
+  /* Right Panel */
+  .right-panel {
+    flex: 1;
+    background: #fceeee;
+    padding: 80px 40px;
+  }
+  
+  .right-panel h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 25px;
+  }
+  
+  label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #444;
+  }
+  
+  input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border: none;
+    border-radius: 20px;
+    background: #ddd4d4;
+    font-size: 14px;
+  }
+  
+  button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 20px;
+    background-color: #3b82f6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  button:hover {
+    background-color: #2563eb;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 25px;
+    border: none;
+    border-radius: 20px;
+    background: #ddd4d4;
+    font-size: 14px;
+  }
+  

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="E-Response - Emergency preparedness and disaster response application" />
+  <title>E-Response Login</title>
+  <style>
+    /* CSS Reset and Base Styles */
+    :root {
+      --primary-color: #c52222;
+      --primary-light: #fdecec;
+      --accent-color: #3b82f6;
+      --text-color: #333;
+      --text-light: #555;
+      --bg-color: #fff;
+      --bg-light: #f8f8f8;
+      --shadow-sm: 0 2px 5px rgba(0,0,0,0.1);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Typography */
+    h1, h2, h3, h4 {
+      line-height: 1.2;
+      margin-bottom: 0.5em;
+    }
+
+    a {
+      color: var(--accent-color);
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    a:hover, a:focus {
+      text-decoration: underline;
+      opacity: 0.9;
+    }
+
+    /* Layout Components */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-color);
+      box-shadow: var(--shadow-sm);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--primary-color);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: bold;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-color);
+      font-weight: 500;
+      position: relative;
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    nav a:hover::after, 
+    nav a:focus::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    main {
+      flex: 1;
+      padding: 2rem 0;
+    }
+
+    .hero-section {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .hero-content {
+      flex: 1;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+      margin-bottom: 1.5rem;
+      color: var(--text-color);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .hero-image {
+      flex: 1;
+      position: relative;
+      border-radius: var(--border-radius);
+      overflow: hidden;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Login Form */
+    .login-container {
+      flex: 1;
+      max-width: 400px;
+      min-width: 320px;
+    }
+
+    .login-card {
+      background: var(--bg-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      padding: 1rem;
+    }
+
+    .login-header {
+      margin-bottom: 1.5rem;
+    }
+
+    .login-title {
+      font-size: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .login-subtitle {
+      color: var(--text-light);
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1px solid #e2e2e2;
+      background: var(--bg-light);
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-color);
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-light);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    .forgot-password {
+      display: block;
+      text-align: right;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      font-size: 1rem;
+    }
+
+    .btn-primary {
+      background-color: var(--accent-color);
+      color: white;
+      width: 100%;
+    }
+
+    .btn-primary:hover, 
+    .btn-primary:focus {
+      background-color: #2563eb;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.5rem 0;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid #e2e2e2;
+    }
+
+    .divider::before {
+      margin-right: 0.5rem;
+    }
+
+    .divider::after {
+      margin-left: 0.5rem;
+    }
+
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .social-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .facebook-btn {
+      background-color: #3b5998;
+    }
+
+    .google-btn {
+      background-color: white;
+      color: #db4437;
+      border: 1px solid #ececec;
+    }
+
+    .register-prompt {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    /* Stats Footer */
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 2rem 0;
+      margin-top: 2rem;
+    }
+
+    .stats-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .stat-card {
+      text-align: center;
+      max-width: 350px;
+    }
+
+    .stat-heading {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-description {
+      font-size: 1rem;
+      opacity: 0.9;
+      line-height: 1.5;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      .hero-section {
+        flex-direction: column;
+      }
+
+      .hero-content {
+        text-align: center;
+      }
+
+      .login-container {
+        max-width: 100%;
+      }
+
+      .login-card {
+        max-width: 450px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .stats-container {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .login-card, .hero-title, .hero-image {
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .hero-image {
+      animation-delay: 0.2s;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo">
+        <div class="logo-icon">ER</div>
+        <div class="logo-text">E-Response</div>
+      </div>
+
+      <nav aria-label="Main navigation">
+        <ul>
+          <li><a href="#" aria-current="page">Home</a></li>
+          <li><a href="#">Menu</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">☰</button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="hero-section">
+        <div class="hero-content">
+          <h1 class="hero-title"><em>Don't Be Unprepared When Disaster Strikes</em></h1>
+          <div class="hero-image">
+            <img src="C:\Users\hazel\E-Response\20827722_Evacuation of people from danger of earthquake in city.svg" alt="Illustration showing people responding to a disaster situation" />
+          </div>
+        </div>
+
+        <div class="login-container">
+          <div class="login-card">
+            <div class="login-header">
+              <h2 class="login-title">Login</h2>
+              <p class="login-subtitle">Login to continue using the app</p>
+            </div>
+
+            <form action="#" method="post">
+              <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required />
+              </div>
+
+              <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <div class="password-wrapper">
+                  <input type="password" id="password" class="form-control" placeholder="Enter your password" required />
+                  <button type="button" class="password-toggle" aria-label="Show password">
+                    👁️
+                  </button>
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <div class="social-login">
+              <button class="social-btn facebook-btn" aria-label="Login with Facebook">f</button>
+              <button class="social-btn google-btn" aria-label="Login with Google">G</button>
+            </div>
+
+            <p class="register-prompt">
+              Don't have an account? <a href="#">Register</a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="stats-container">
+        <div class="stat-card">
+          <h3 class="stat-heading">90%</h3>
+          <p class="stat-description">
+            of earthquake-related deaths occur in developing countries due to poor infrastructure and lack of preparedness.
+          </p>
+        </div>
+        <div class="stat-card">
+          <h3 class="stat-heading">80%</h3>
+          <p class="stat-description">
+            of casualties can be prevented through early preparedness, safety drills, and proper building codes.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Password visibility toggle
+    document.querySelector('.password-toggle').addEventListener('click', function() {
+      const passwordInput = document.getElementById('password');
+      const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+      passwordInput.setAttribute('type', type);
+      this.textContent = type === 'password' ? '👁️' : '🔒';
+    });
+
+    // Mobile menu toggle (would need additional CSS/JS for full implementation)
+    document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+      // Toggle mobile menu visibility
+      alert('Mobile menu clicked - would normally toggle menu visibility');
+    });
+  </script>
+</body>
+</html>

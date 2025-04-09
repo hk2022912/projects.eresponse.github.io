@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - E-Response</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* General Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf2f2;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    /* Container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Header */
+    header {
+      background-color: #ffeaea;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .site-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #c9302c;
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    
+    .nav-links a:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+    
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 24px;
+    }
+    
+    /* Hero Section */
+    .hero {
+      position: relative;
+      height: 120vh;
+      background: url('images/Myanmar_Earthquake_41717.webp') no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 40px;
+      color: white;
+      text-align: center;
+    }
+    
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+    }
+    
+    .hero-title {
+      font-size: 40px;
+      font-weight: bold;
+      margin-bottom: 60px;
+      letter-spacing: 1px;
+    }
+    
+    /* Team Section */
+    .team-members {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+    
+    .team-member {
+      width: 230px;
+      height: 230px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .team-member img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Mission Section */
+    .mission-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: rgba(255, 215, 215, 0.85);
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #333;
+    }
+    
+    .mission-text {
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .header-container {
+        position: relative;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background-color: #ffeaea;
+        padding: 20px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        gap: 10px;
+        display: none;
+      }
+      
+      .nav-links.active {
+        display: flex;
+      }
+      
+      .team-members {
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .team-member {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .mission-container {
+        padding: 30px 20px;
+      }
+      
+      .hero-title {
+        font-size: 32px;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      .team-members {
+        gap: 15px;
+      }
+      
+      .team-member {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .mission-container {
+        padding: 20px 15px;
+      }
+      
+      .hero-title {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo-title">
+        <img src="C:\Users\hazel\E-Response\android-chrome-192x192.png" alt="E-Response Logo" class="logo" />
+        <h1 class="site-title">E-Response</h1>
+      </div>
+      <button class="hamburger" id="menu-toggle">☰</button>
+      <nav>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="homepage.html">Home</a></li>
+          <li><a href="#">Emergency Resources</a></li>
+          <li><a href="#">Preparedness</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content container">
+      <h2 class="hero-title">OUR TEAM AND MISSION</h2>
+      
+      <div class="team-members">
+        <div class="team-member">
+          <img src="team/unnamed h.jpg" alt="Team Member 1">
+        </div>
+        <div class="team-member">
+          <img src="team/unnamed hk.jpg" alt="Team Member 2">
+        </div>
+        <div class="team-member">
+          <img src="team/unnamed k.jpg" alt="Team Member 3">
+        </div>
+        <div class="team-member">
+          <img src="team/unnamed p.jpg" alt="Team Member 4">
+        </div>
+      </div>
+      
+      <div class="mission-container">
+        <p class="mission-text">
+          At E-Response, we believe that knowledge saves lives. Our mission is to 
+          empower individuals, families, and communities with the tools they 
+          need to stay safe and prepared before, during, and after earthquakes.
+        </p>
+        <p class="mission-text">
+          We developed the E-Response Mobile App as a complete survival guide, 
+          offering offline-accessible safety tips, emergency contacts, first aid 
+          guides, preparedness checklists, and real-time updates—all in one user-
+          friendly platform.
+        </p>
+        <p class="mission-text">
+          Created by a passionate team of students and future tech professionals, 
+          this app is our commitment to promoting safety, awareness, and 
+          resilience in earthquake-prone areas.
+        </p>
+        <p class="mission-text">
+          Together, let's build a safer and more prepared tomorrow.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('nav-menu').classList.toggle('active');
+    });
+  </script>
+</body>
+</html>
