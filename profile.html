@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Response - User Profile</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* General Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf2f2;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    /* Container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Header - Consistent with Homepage */
+    header {
+      background-color: #ffeaea;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .site-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #c9302c;
+    }
+    
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+      display: block;
+    }
+    
+    .nav-links a:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+    
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-btn {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .dropdown-btn:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+    
+    .dropdown-btn::after {
+      content: '▼';
+      font-size: 10px;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      z-index: 10;
+      top: 100%;
+      left: 0;
+    }
+    
+    .dropdown-content a {
+      color: #444;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      color: #c9302c;
+    }
+    
+    .dropdown-content .logout-btn {
+      color: #c9302c;
+      font-weight: 500;
+      border-top: 1px solid #eee;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    /* Mobile Styles for Dropdown */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 24px;
+    }
+    
+    /* Mobile responsive styles */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: block;
+        margin-left: auto;
+      }
+      
+      .header-container {
+        position: relative;
+      }
+      
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #ffeaea;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        display: block;
+      }
+      
+      .nav-links {
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        gap: 0;
+        width: 100%;
+      }
+      
+      .nav-links.active {
+        max-height: 500px;
+        padding: 10px 0;
+      }
+      
+      .nav-links li {
+        width: 100%;
+      }
+      
+      .nav-links a, .dropdown-btn {
+        width: 100%;
+        padding: 15px 20px;
+        margin: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .dropdown {
+        width: 100%;
+      }
+      
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding-left: 20px;
+      }
+      
+      .dropdown-content.show {
+        max-height: 300px;
+      }
+      
+      .dropdown-content a {
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+    }
+
+    /* Rest of your CSS remains the same */
+    /* Profile Container Styles */
+    .profile-container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 30px;
+      margin: 50px auto;
+      max-width: 800px;
+      flex-wrap: wrap;
+    }
+    
+    /* Left: Medical Info */
+    .profile-left {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    /* Profile Image Container and Styles */
+    .profile-image-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 20px;
+    }
+    
+    .profile-image {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #f8f8f8;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .change-photo-btn {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: #d9534f;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      opacity: 0.8;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .change-photo-btn:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    
+    /* Hide the actual file input */
+    #photo-upload {
+      display: none;
+    }
+    
+    .profile-title {
+      color: #c9302c;
+      margin-bottom: 20px;
+    }
+    
+    /* Right: Full Info */
+    .profile-right {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 300px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .form-columns {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .profile-section {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 8px;
+      color: #444;
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"] {
+      width: 100%;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      background: #f9f9f9;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    input:disabled {
+      background-color: #f2f2f2;
+      color: #666;
+      cursor: not-allowed;
+    }
+    
+    input:not(:disabled) {
+      background-color: #fff;
+      border: 1px solid #d9534f;
+    }
+    
+    input:focus {
+      outline: none;
+      border-color: #c9302c;
+      box-shadow: 0 0 0 2px rgba(201, 48, 44, 0.2);
+    }
+    
+    /* Buttons */
+    button {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 30px;
+      background-color: #d9534f;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 20px auto 0;
+      display: block;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+    
+    button:hover {
+      background-color: #c9302c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .show-info {
+      color: #d9534f;
+      cursor: pointer;
+      margin-top: 20px;
+      font-weight: 500;
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 20px;
+      background-color: rgba(217, 83, 79, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .show-info:hover {
+      background-color: rgba(217, 83, 79, 0.2);
+    }
+    
+    /* Hidden class */
+    .hidden {
+      display: none;
+    }
+    
+    /* Editing mode indicator */
+    .editing-mode {
+      background-color: #fff9f9;
+      border: 2px solid #d9534f;
+    }
+    
+    .edit-indicator {
+      display: none;
+      color: #d9534f;
+      background-color: rgba(217, 83, 79, 0.1);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+    
+    /* Modal for image selection */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      overflow: auto;
+    }
+    
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 30px;
+      border-radius: 12px;
+      width: 80%;
+      max-width: 400px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+    
+    .close-btn {
+      position: absolute;
+      right: 15px;
+      top: 15px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+    }
+    
+    .image-preview {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 3px solid #f8f8f8;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .upload-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .upload-btn {
+      padding: 10px;
+      border: 1px solid #d9534f;
+      border-radius: 6px;
+      background-color: #fff;
+      color: #d9534f;
+      font-size: 15px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .upload-btn:hover {
+      background-color: rgba(217, 83, 79, 0.1);
+    }
+    
+    .default-pics {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .default-pic {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+    
+    .default-pic:hover {
+      border-color: #d9534f;
+      transform: scale(1.1);
+    }
+    
+    /* Remove number input spinners */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header - Consistent with Homepage -->
+  <header>
+    <div class="container header-container">
+      <div class="logo-title">
+        <img src="dp.png" alt="E-Response Logo" class="logo" />
+        <h1 class="site-title">E-Response</h1>
+      </div>
+      <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+      <nav>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="homepage.html">Home</a></li>
+          <li class="dropdown">
+            <button class="dropdown-btn" id="menu-dropdown-btn">Menu</button>
+            <div class="dropdown-content" id="menu-dropdown">
+              <a href="preparedness.html">Preparedness</a>
+              <a href="emergency_contacts.html">Emergency Contacts</a>
+              <a href="login.html" class="logout-btn">Log Out</a>
+            </div>
+          </li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Profile Container -->
+  <div class="container">
+    <div class="profile-container">
+      
+      <!-- Medical Info Card -->
+      <div class="profile-left" id="med-info-card">
+        <!-- Profile Image with Change Button -->
+        <div class="profile-image-container">
+          <img src="images/profileicon.jpg" alt="Profile Picture" class="profile-image" id="profile-image">
+          <div class="change-photo-btn" onclick="openPhotoModal()">
+            <span>📷</span>
+          </div>
+          <input type="file" id="photo-upload" accept="image/*" onchange="previewImage(event)">
+        </div>
+        
+        <h2 class="profile-title">Medical Information</h2>
+        <div class="edit-indicator" id="med-edit-indicator">Editing Mode</div>
+        
+        <div class="profile-section">
+          <label for="blood">Blood Type</label>
+          <input type="text" id="blood" disabled placeholder="Enter your blood type">
+        </div>
+        <div class="profile-section">
+          <label for="weight">Weight (kg)</label>
+          <input type="text" id="weight" disabled placeholder="Enter your weight">
+        </div>
+        <div class="profile-section">
+          <label for="height">Height (cm)</label>
+          <input type="text" id="height" disabled placeholder="Enter your height">
+        </div>
+        <div class="profile-section">
+          <label for="allergies">Allergies</label>
+          <input type="text" id="allergies" disabled placeholder="List any allergies">
+        </div>
+        <div class="profile-section">
+          <label for="medications">Current Medications</label>
+          <input type="text" id="medications" disabled placeholder="List any medications">
+        </div>
+
+        <div class="show-info" onclick="toggleInfo()">View Personal Details</div>
+      </div>
+
+      <!-- Full User Info Card -->
+      <div class="profile-right hidden" id="extra-info">
+        <h2 class="profile-title">Personal Information</h2>
+        <div class="edit-indicator" id="personal-edit-indicator">Editing Mode</div>
+        
+        <div class="form-columns">
+          <div class="profile-section">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" disabled placeholder="Enter your full name">
+          </div>
+          <div class="profile-section">
+            <label for="sex">Sex</label>
+            <input type="text" id="sex" disabled placeholder="Enter your sex">
+          </div>
+          <div class="profile-section">
+            <label for="age">Age</label>
+            <input type="number" id="age" disabled placeholder="Enter your age">
+          </div>
+          <div class="profile-section">
+            <label for="birthdate">Date of Birth</label>
+            <input type="text" id="birthdate" disabled placeholder="DD/MM/YYYY">
+          </div>
+          <div class="profile-section">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" disabled placeholder="Enter your email">
+          </div>
+          <div class="profile-section">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" disabled placeholder="Enter your phone number">
+          </div>
+          <div class="profile-section">
+            <label for="address">Address</label>
+            <input type="text" id="address" disabled placeholder="Enter your address">
+          </div>
+          <div class="profile-section">
+            <label for="emergency-contact">Emergency Contact</label>
+            <input type="text" id="emergency-contact" disabled placeholder="Name and phone number">
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Centered Edit Button -->
+    <div style="text-align: center; margin-bottom: 50px;">
+      <button id="edit-btn" onclick="toggleEdit()">Edit Profile</button>
+    </div>
+  </div>
+  
+  <!-- Photo Selection Modal -->
+  <div id="photo-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closePhotoModal()">&times;</span>
+      <h3 style="text-align: center; margin-bottom: 20px;">Change Profile Photo</h3>
+      
+      <div class="image-preview">
+        <img src="images/1.jpg" alt="Profile Preview" id="preview-image">
+      </div>
+      
+      <div class="upload-options">
+        <label for="photo-upload-modal" class="upload-btn">
+          Upload from device
+          <input type="file" id="photo-upload-modal" accept="image/*" onchange="previewImageModal(event)" style="display: none;">
+        </label>
+        
+        <p style="text-align: center; margin: 10px 0;">Or choose from default images</p>
+        
+        <div class="default-pics">
+          <img src="images/profileicon.jpg" alt="Default 1" class="default-pic" onclick="selectDefaultImage('images/1.jpg')">
+          <img src="images/profile1.jpg" alt="Default 2" class="default-pic" onclick="selectDefaultImage('images/2.jpg')">
+          <img src="images/profile2.jpg" alt="Default 3" class="default-pic" onclick="selectDefaultImage('images/3.jpg')">
+          <img src="images/profile3.jpg" alt="Default 4" class="default-pic" onclick="selectDefaultImage('images/4.jpg')">
+        </div>
+        
+        <button onclick="applyPhotoChange()" style="margin-top: 20px;">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Edit mode toggle function
+    function toggleEdit() {
+      const allInputs = document.querySelectorAll('input');
+      const button = document.getElementById('edit-btn');
+      const medInfoCard = document.getElementById('med-info-card');
+      const extraInfo = document.getElementById('extra-info');
+      const medEditIndicator = document.getElementById('med-edit-indicator');
+      const personalEditIndicator = document.getElementById('personal-edit-indicator');
+      const changePhotoBtn = document.querySelector('.change-photo-btn');
+      
+      const isEditing = button.innerText === "Edit Profile";
+
+      // Toggle input fields
+      allInputs.forEach(input => {
+        if (input.id !== 'photo-upload' && input.id !== 'photo-upload-modal') {
+          input.disabled = !isEditing;
+        }
+      });
+
+      // Toggle button text
+      button.innerText = isEditing ? "Save Changes" : "Edit Profile";
+      
+      // Toggle visibility of change photo button
+      changePhotoBtn.style.display = isEditing ? 'flex' : 'none';
+      
+      // Visual feedback for edit mode
+      if (isEditing) {
+        medInfoCard.classList.add('editing-mode');
+        medEditIndicator.style.display = 'inline-block';
+        
+        if (!extraInfo.classList.contains('hidden')) {
+          extraInfo.classList.add('editing-mode');
+          personalEditIndicator.style.display = 'inline-block';
+        }
+        
+        // Show both sections when entering edit mode
+        extraInfo.classList.remove('hidden');
+      } else {
+        // Save the changes (in a real app, you would send this to a server)
+        saveChanges();
+        
+        medInfoCard.classList.remove('editing-mode');
+        extraInfo.classList.remove('editing-mode');
+        medEditIndicator.style.display = 'none';
+        personalEditIndicator.style.display = 'none';
+      }
+    }
+
+    // Toggle info panel visibility
+    function toggleInfo() {
+      const extraInfo = document.getElementById('extra-info');
+      const toggle = document.querySelector('.show-info');
+      
+      extraInfo.classList.toggle('hidden');
+      toggle.innerText = extraInfo.classList.contains('hidden') ? 
+                        'View Personal Details' : 'Hide Personal Details';
+      
+      // Apply editing styles if in edit mode
+      if (document.getElementById('edit-btn').innerText === "Save Changes" && 
+          !extraInfo.classList.contains('hidden')) {
+        extraInfo.classList.add('editing-mode');
+        document.getElementById('personal-edit-indicator').style.display = 'inline-block';
+      }
+    }
+    
+    // Save changes function - would connect to backend in production
+    function saveChanges() {
+      // Here you would normally send data to a server
+      // For now, we'll just show an alert
+      console.log("Changes saved!");
+      
+      // Sample data collection
+      const medicalData = {
+        bloodType: document.getElementById('blood').value,
+        weight: document.getElementById('weight').value,
+        height: document.getElementById('height').value,
+        allergies: document.getElementById('allergies').value,
+        medications: document.getElementById('medications').value
+      };
+      
+      const personalData = {
+        name: document.getElementById('name').value,
+        sex: document.getElementById('sex').value,
+        age: document.getElementById('age').value,
+        birthdate: document.getElementById('birthdate').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        emergencyContact: document.getElementById('emergency-contact').value
+      };
+      
+      // Get profile image source
+      const profileImageSrc = document.getElementById('profile-image').src;
+      
+      // In a real application, you would send this data to your server
+      console.log("Medical data:", medicalData);
+      console.log("Personal data:", personalData);
+      console.log("Profile image:", profileImageSrc);
+      
+      // Show success message (in a real app, you'd use better feedback)
+      alert("Profile updated successfully!");
+    }
+    
+    // Photo modal functions
+    function openPhotoModal() {
+      // Only allow opening the modal in edit mode
+      if (document.getElementById('edit-btn').innerText === "Save Changes") {
+        document.getElementById('photo-modal').style.display = 'block';
+        // Set the preview image to match the current profile image
+        document.getElementById('preview-image').src = document.getElementById('profile-image').src;
+      }
+    }
+    
+    function closePhotoModal() {
+      document.getElementById('photo-modal').style.display = 'none';
+    }
+    
+    // Handle file upload directly from profile
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const output = document.getElementById('profile-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    
+    // Handle file upload in modal
+    function previewImageModal(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const output = document.getElementById('preview-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    
+    // Select default image in modal
+    function selectDefaultImage(imageSrc) {
+      document.getElementById('preview-image').src = imageSrc;
+      
+      // Highlight the selected default image
+      const defaultPics = document.querySelectorAll('.default-pic');
+      defaultPics.forEach(pic => {
+        if (pic.src.includes(imageSrc)) {
+          pic.style.border = '2px solid #d9534f';
+          pic.style.transform = 'scale(1.1)';
+        } else {
+          pic.style.border = '2px solid transparent';
+          pic.style.transform = 'scale(1)';
+        }
+      });
+    }
+    
+    // Apply the selected image from modal to profile
+    function applyPhotoChange() {
+      const previewImage = document.getElementById('preview-image').src;
+      document.getElementById('profile-image').src = previewImage;
+      closePhotoModal();
+    }
+    
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('nav-menu').classList.toggle('active');
+    });
+    
+    // Handle mobile dropdown menu
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.innerWidth <= 768) {
+        document.getElementById('menu-dropdown-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('menu-dropdown').classList.toggle('show');
+        });
+      } else {
+        // Desktop dropdown hover behavior
+        document.querySelector('.dropdown').addEventListener('mouseenter', function() {
+          document.getElementById('menu-dropdown').style.display = 'block';
+        });
+        
+        document.querySelector('.dropdown').addEventListener('mouseleave', function() {
+          document.getElementById('menu-dropdown').style.display = 'none';
+        });
+      }
+      
+      // Hide the change photo button initially (only visible in edit mode)
+      document.querySelector('.change-photo-btn').style.display = 'none';
+      
+      // Optional: Load saved data
+      loadSavedData();
+    });
+    
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const modal = document.getElementById('photo-modal');
+      if (event.target == modal) {
+        closePhotoModal();
+      }
+    }
+    
+    // Optional: Load saved data from localStorage or server
+    function loadSavedData() {
+      // In a real application, you would fetch this data from your server
+      // This is just a placeholder example using hardcoded values
+      document.getElementById('blood').value = "O+";
+      document.getElementById('weight').value = "70";
+      document.getElementById('height').value = "175";
+      document.getElementById('name').value = "John Doe";
+      // Additional fields would be populated here
+    }
+  </script>
+
+</body>
+</html>

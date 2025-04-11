@@ -66,6 +66,7 @@
       list-style: none;
       display: flex;
       gap: 20px;
+      align-items: center;
     }
     
     .nav-links a {
@@ -82,6 +83,75 @@
       background-color: rgba(201, 48, 44, 0.1);
     }
     
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-btn {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .dropdown-btn:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+    
+    .dropdown-btn::after {
+      content: '▼';
+      font-size: 10px;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      z-index: 10;
+      top: 100%;
+      left: 0;
+    }
+    
+    .dropdown-content a {
+      color: #444;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      color: #c9302c;
+    }
+    
+    .dropdown-content .logout-btn {
+      color: #c9302c;
+      font-weight: 500;
+      border-top: 1px solid #eee;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    /* Mobile Styles for Dropdown */
     .hamburger {
       display: none;
       cursor: pointer;
@@ -96,7 +166,7 @@
       height: 500px;
       background-color: #333; /* Fallback */
       background: url('images/Myanmar_Earthquake_41717.webp') no-repeat center center/cover;
-       background-repeat: no-repeat;
+      background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
       display: flex;
@@ -322,7 +392,7 @@
       color: #aaa;
     }
     
-    /* Responsive styles - UPDATED to match login page style */
+    /* Responsive styles */
     @media (max-width: 768px) {
       header .container {
         padding: 15px 20px;
@@ -349,22 +419,46 @@
         transition: max-height 0.3s ease;
         padding: 0;
         gap: 0;
+        align-items: flex-start;
       }
       
       .nav-links.active {
-        max-height: 300px;
+        max-height: 500px;
       }
       
       .nav-links li {
         width: 100%;
       }
       
-      .nav-links a {
+      .nav-links a, .dropdown-btn {
         display: block;
         width: 100%;
         padding: 15px 20px;
         margin: 0;
         border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .dropdown {
+        width: 100%;
+      }
+      
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding-left: 20px;
+      }
+      
+      .dropdown-content.show {
+        max-height: 300px;
+      }
+      
+      .dropdown-content a {
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.5);
       }
       
       .overlay-text {
@@ -390,17 +484,23 @@
   <header>
     <div class="container header-container">
       <div class="logo-title">
-        <img src="C:\Users\hazel\E-Response\android-chrome-192x192.png" alt="E-Response Logo" class="logo" />
+        <img src="dp.png" alt="E-Response Logo" class="logo" />
         <h1 class="site-title">E-Response</h1>
       </div>
       <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
       <nav>
         <ul class="nav-links" id="nav-menu">
           <li><a href="homepage.html">Home</a></li>
-          <li><a href="#">Emergency Resources</a></li>
-          <li><a href="#">Preparedness</a></li>
+          <li class="dropdown">
+            <button class="dropdown-btn" id="menu-dropdown-btn">Menu</button>
+            <div class="dropdown-content" id="menu-dropdown">
+              <a href="preparedness.html">Preparedness</a>
+              <a href="emergency_contacts.html">Emergency Contacts</a>
+              <a href="#" class="logout-btn">Log Out</a>
+            </div>
+          </li>
           <li><a href="about.html">About Us</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="profile.html">Profile</a></li>
         </ul>
       </nav>
     </div>
@@ -419,7 +519,7 @@
       <h2>Recent Earthquake News</h2>
       <div class="card-grid">
         <div class="card">
-          <img src="C:\Users\hazel\E-Response\images\Myanmar_Earthquake_41717.webp" alt="Aftermath of the Japan tsunami showing flooded streets and damaged buildings" />
+          <img src="images/Myanmar_Earthquake_41717.webp" alt="Aftermath of the Japan tsunami showing flooded streets and damaged buildings" />
           <div class="card-content">
             <h3>Japan Tsunami</h3>
             <p>A powerful earthquake triggered a devastating tsunami that hit Japan's eastern coast, causing widespread damage and displacement.</p>
@@ -427,7 +527,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="C:\Users\hazel\E-Response\images\Myanmar_Earthquake_41717.webp" alt="Rescue workers searching through rubble after the Turkey earthquake" />
+          <img src="images/Myanmar_Earthquake_41717.webp" alt="Rescue workers searching through rubble after the Turkey earthquake" />
           <div class="card-content">
             <h3>Turkey Earthquake 2023</h3>
             <p>The 7.8 magnitude earthquake that struck Turkey caused massive destruction across multiple cities and affected millions of people.</p>
@@ -435,7 +535,7 @@
           </div>
         </div>
         <div class="card">
-          <img src="C:\Users\hazel\E-Response\images\Myanmar_Earthquake_41717.webp" alt="Structural damage to buildings after the Thailand earthquake" />
+          <img src="images/Myanmar_Earthquake_41717.webp" alt="Structural damage to buildings after the Thailand earthquake" />
           <div class="card-content">
             <h3>Thailand Earthquake 2025</h3>
             <p>A 6.4 magnitude earthquake hit northern Thailand, damaging infrastructure and affecting local communities across the region.</p>
@@ -514,10 +614,27 @@
   </footer>
 
   <script>
-    // Mobile menu toggle - updated to match login page functionality
+    // Mobile menu toggle
     document.getElementById('menu-toggle').addEventListener('click', function() {
       document.getElementById('nav-menu').classList.toggle('active');
     });
+    
+    // Mobile dropdown toggle
+    if (window.innerWidth <= 768) {
+      document.getElementById('menu-dropdown-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('menu-dropdown').classList.toggle('show');
+      });
+    } else {
+      // For desktop, show dropdown on hover
+      document.querySelector('.dropdown').addEventListener('mouseenter', function() {
+        document.getElementById('menu-dropdown').style.display = 'block';
+      });
+      
+      document.querySelector('.dropdown').addEventListener('mouseleave', function() {
+        document.getElementById('menu-dropdown').style.display = 'none';
+      });
+    }
   </script>
 </body>
 </html>

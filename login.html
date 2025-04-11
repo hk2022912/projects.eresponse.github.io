@@ -443,12 +443,11 @@
 <body>
   <header>
     <div class="logo">
-      <img src="C:\Users\hazel\E-Response\android-chrome-192x192.png" alt="E-Response Logo" />
+      <img src="dp.png" alt="E-Response Logo" />
       <span>E-Response</span>
     </div>
     <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
     <nav id="nav-menu">
-      <a href="homepage.html">Home</a>
       <a href="#">Resources</a>
       <a href="about.html">About Us</a>
       <a href="#">Contact Us</a>
@@ -466,7 +465,7 @@
           <h3>Welcome Back</h3>
           <p>Login to access emergency resources and safety plans</p>
           
-          <form action="#" method="post">
+          <form action="#" method="post" id="login-form">
             <div class="form-group">
               <label for="email">Email</label>
               <input type="email" id="email" placeholder="Enter your email" required autocomplete="email" />
@@ -549,19 +548,23 @@
       }
     });
 
-      // JavaScript to handle form submission
-  document.getElementById('login-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // Prevent default form behavior
-
-    // Optional: Get the values (for future validation or authentication)
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    // TODO: Add validation/auth logic here
-
-    // Redirect to homepage (for now, simulate successful login)
-    window.location.href = 'homepage.html';
-  });
+    // JavaScript to handle form submission and redirect to homepage
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent default form behavior
+      
+      // Get form input values
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      // Basic validation - you can add more complex validation as needed
+      if (email && password) {
+        // You would typically have authentication logic here
+        // For now, just redirect to homepage on successful form submission
+        window.location.href = 'homepage.html';
+      } else {
+        alert('Please enter both email and password');
+      }
+    });
   </script>
 </body>
 </html>

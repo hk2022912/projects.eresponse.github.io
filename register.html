@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>E-Response - Password Management</title>
+  <title>E-Response - Registration</title>
   <style>
     /* Reset */
     * {
@@ -126,31 +126,27 @@
       padding: 40px;
     }
     
-    /* Password Container */
-    .password-container {
+    /* Registration Container */
+    .registration-container {
       max-width: 450px;
       width: 100%;
       background: #fff;
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.12);
       overflow: hidden;
-      transition: all 0.3s ease;
-    }
-    
-    /* Password Forms */
-    .password-form {
       padding: 2.5rem;
       animation: fadeIn 0.5s ease-in-out;
     }
     
-    .password-title {
+    /* Registration Form */
+    .registration-title {
       color: #c62828;
       font-size: 1.8rem;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       text-align: center;
     }
     
-    .password-subtitle {
+    .registration-subtitle {
       color: #666;
       font-size: 0.95rem;
       margin-bottom: 2rem;
@@ -284,7 +280,7 @@
       box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.3);
     }
     
-    /* Text Center and Links */
+    /* Login Link */
     .text-center {
       text-align: center;
     }
@@ -341,7 +337,7 @@
         padding: 40px 20px;
       }
       
-      .password-container {
+      .registration-container {
         max-width: 100%;
       }
     }
@@ -374,11 +370,11 @@
         height: 140px;
       }
       
-      .password-title {
+      .registration-title {
         font-size: 1.5rem;
       }
       
-      .password-subtitle {
+      .registration-subtitle {
         font-size: 0.9rem;
       }
     }
@@ -392,7 +388,7 @@
     </div>
     <nav class="nav-links">
       <a href="#">Menu</a>
-      <a href="about.html">About Us</a>
+      <a href="#">About Us</a>
       <a href="#">Contact Us</a>
     </nav>
   </header>
@@ -400,17 +396,29 @@
   <main class="container">
     <div class="left-panel">
       <h1>E-Response</h1>
-      <img src="C:\Users\hazel\E-Response\dp.png" alt="Disaster Preparedness Illustration" class="illustration" />
+      <img src="dp.png" alt="Disaster Preparedness Illustration" class="illustration" />
       <p>Be ready when it matters most.<br>
       Your complete earthquake survival guide, right in your pocket.</p>
     </div>
 
     <div class="right-panel">
-      <div class="password-container">
-        <!-- Forgot Password Form -->
-        <form id="forgot-form" class="password-form" aria-labelledby="forgot-password-title">
-          <h2 id="forgot-password-title" class="password-title">Forgot Password?</h2>
-          <p class="password-subtitle">Enter your email to receive a password reset link</p>
+      <div class="registration-container">
+        <h2 class="registration-title">Register</h2>
+        <p class="registration-subtitle">Enter Your Personal Information</p>
+        
+        <form id="registration-form">
+          <div class="form-group">
+            <label for="full-name">Full Name</label>
+            <input 
+              type="text" 
+              id="full-name" 
+              name="full-name"
+              placeholder="Enter your Name" 
+              required
+              autocomplete="name"
+              aria-required="true"
+            />
+          </div>
           
           <div class="form-group">
             <label for="email">Email Address</label>
@@ -425,33 +433,14 @@
             />
           </div>
           
-          <button 
-            type="button" 
-            class="btn-primary" 
-            id="send-reset-link"
-            onclick="showCreatePassword()"
-          >
-            Send Reset Link
-          </button>
-          
-          <div class="text-center">
-            <a href="login.html" class="text-link">Back to Login</a>
-          </div>
-        </form>
-
-        <!-- Create Password Form (Initially Hidden) -->
-        <form id="create-form" class="password-form hidden" aria-labelledby="create-password-title">
-          <h2 id="create-password-title" class="password-title">Create New Password</h2>
-          <p class="password-subtitle">Please create a strong password for your account</p>
-          
           <div class="form-group">
-            <label for="new-password">New Password</label>
+            <label for="password">Password</label>
             <div class="password-field">
               <input 
                 type="password" 
-                id="new-password" 
-                name="new-password"
-                placeholder="Enter new password" 
+                id="password" 
+                name="password"
+                placeholder="Enter your password" 
                 required
                 minlength="8"
                 autocomplete="new-password"
@@ -462,7 +451,7 @@
                 type="button"
                 class="password-toggle" 
                 aria-label="Toggle password visibility"
-                onclick="togglePassword('new-password')"
+                onclick="togglePassword('password')"
               >
                 👁️
               </button>
@@ -493,7 +482,7 @@
                 type="password" 
                 id="confirm-password" 
                 name="confirm-password"
-                placeholder="Confirm new password" 
+                placeholder="Enter confirm password" 
                 required
                 minlength="8"
                 autocomplete="new-password"
@@ -515,43 +504,20 @@
           <button 
             type="submit" 
             class="btn-primary"
-            id="reset-password-btn"
-            disabled
+            id="register-btn"
           >
-            Reset Password
+            Register
           </button>
+          
+          <div class="text-center">
+            <a href="login.html" class="text-link">Already have an account? Login</a>
+          </div>
         </form>
       </div>
     </div>
   </main>
 
   <script>
-    // Show the create password form
-    function showCreatePassword() {
-      const email = document.getElementById('email').value;
-      
-      // Simple email validation
-      if (!validateEmail(email)) {
-        alert('Please enter a valid email address.');
-        return;
-      }
-      
-      // Simulate sending reset link
-      document.getElementById('forgot-form').classList.add('hidden');
-      document.getElementById('create-form').classList.remove('hidden');
-      
-      // Focus on new password field
-      setTimeout(() => {
-        document.getElementById('new-password').focus();
-      }, 300);
-    }
-    
-    // Email validation helper
-    function validateEmail(email) {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(String(email).toLowerCase());
-    }
-    
     // Toggle password visibility
     function togglePassword(fieldId) {
       const field = document.getElementById(fieldId);
@@ -570,9 +536,8 @@
     
     // Check password strength and requirements
     function checkPasswordStrength() {
-      const password = document.getElementById('new-password').value;
+      const password = document.getElementById('password').value;
       const strengthMeter = document.getElementById('password-strength');
-      const resetButton = document.getElementById('reset-password-btn');
       
       // Update requirements
       const lengthReq = document.getElementById('req-length');
@@ -619,7 +584,7 @@
         strengthMeter.style.background = '#4caf50'; // Strong (green)
       }
       
-      // Check if we should enable the submit button
+      // Check form validity
       checkFormValidity();
     }
     
@@ -638,7 +603,7 @@
     
     // Check if passwords match
     function checkPasswordMatch() {
-      const password = document.getElementById('new-password').value;
+      const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
       const matchMessage = document.getElementById('password-match');
       
@@ -653,15 +618,15 @@
         matchMessage.style.color = '#4caf50';
       }
       
-      // Check if we should enable the submit button
+      // Check form validity
       checkFormValidity();
     }
     
-    // Check if the form is valid to enable the submit button
+    // Check if the form is valid
     function checkFormValidity() {
-      const password = document.getElementById('new-password').value;
+      const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
-      const resetButton = document.getElementById('reset-password-btn');
+      const registerButton = document.getElementById('register-btn');
       
       // Password requirements
       const hasLength = password.length >= 8;
@@ -673,20 +638,15 @@
       const requirementsMet = hasLength && hasUppercase && hasNumber && hasSpecial;
       const passwordsMatch = password === confirmPassword && confirmPassword !== '';
       
-      resetButton.disabled = !(requirementsMet && passwordsMatch);
+      registerButton.disabled = !(requirementsMet && passwordsMatch);
     }
     
-    // Form submission handlers
-    document.getElementById('forgot-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      showCreatePassword();
-    });
-    
-    document.getElementById('create-form').addEventListener('submit', function(e) {
+    // Form submission handler
+    document.getElementById('registration-form').addEventListener('submit', function(e) {
       e.preventDefault();
       
       // Final validation check
-      const password = document.getElementById('new-password').value;
+      const password = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirm-password').value;
       
       if (password !== confirmPassword) {
@@ -694,8 +654,8 @@
         return;
       }
       
-      // Simulate successful password reset
-      alert('Password has been successfully reset! You will now be redirected to the login page.');
+      // Simulate successful registration
+      alert('Registration successful! You will now be redirected to the login page.');
       
       // Redirect to login page
       setTimeout(() => {

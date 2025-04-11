@@ -1,0 +1,135 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #c62828;
+  
+  }
+  
+  /* Navbar */
+  .navbar {
+    background: #ffeeee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .logo img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+  }
+  
+  .nav-links a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  
+  /* Profile container */
+  .profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    margin: 50px auto;
+    max-width: 720px;
+    flex-wrap: wrap;
+  }
+  
+  /* Left: Medical Info */
+  .profile-left {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    flex: 1;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .profile-left img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  /* Right: Full Info */
+  .profile-right {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    flex: 1;
+    max-width: 300px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .form-columns {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .profile-section {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"] {
+    width: 200px; /* Adjusted width */
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    background: #f2f2f2;
+    font-size: 14px;
+  }
+  
+  /* Centered button */
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: #3b82f6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 20px auto 0;
+    display: block; /* Center using margin auto */
+  }
+  
+  button:hover {
+    background-color: #2563eb;
+  }
+  
+  .show-info {
+    color: #3b82f6;
+    cursor: pointer;
+    margin-top: 15px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+  
+  /* Hidden class */
+  .hidden {
+    display: none;
+  }
