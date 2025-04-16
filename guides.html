@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guides and Tutorials</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fbeeee;
+      color: #333;
+    }
+
+    header {
+      background-color: #ffeaea;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .site-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #c9302c;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .nav-links a:hover,
+    .dropdown-btn:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-btn {
+      background: none;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #444;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .dropdown-btn::after {
+      content: " ▼";
+      font-size: 10px;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      top: 100%;
+      left: 0;
+      min-width: 180px;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .dropdown-content a {
+      display: block;
+      padding: 12px 16px;
+      color: #444;
+      text-decoration: none;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      color: #c9302c;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+    h1 {
+      text-align: center;
+      color: #222;
+      margin-top: 40px;
+    }
+
+    .quote {
+      text-align: center;
+      font-style: italic;
+      color: #555;
+      margin-bottom: 40px;
+    }
+
+    .tutorials-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: #fff;
+      display: flex;
+      gap: 20px;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      align-items: center;
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .thumbnail {
+      width: 180px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .card-content {
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4b2c2c;
+      text-decoration: none;
+    }
+
+    .card-source {
+      font-size: 14px;
+      color: #666;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.6);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 600px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(-30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #c9302c;
+    }
+
+    @media (max-width: 768px) {
+      .tutorials-container {
+        grid-template-columns: 1fr;
+      }
+
+      .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="logo-title">
+        <img src="C:\Users\hazel\E-Response\dp.png" alt="Logo" class="logo">
+        <div class="site-title">E-Response</div>
+      </div>
+      <nav>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="homepage.html">Home</a></li>
+          <li class="dropdown">
+            <button class="dropdown-btn" id="menu-dropdown-btn">Menu</button>
+            <div class="dropdown-content" id="menu-dropdown">
+              <a href="preparedness.html">Preparedness</a>
+              <a href="emergency_contacts.html">Emergency Contacts</a>
+              <a href="guides.html" class="logout-btn">Guides and Tutorials</a>
+              <a href="#" class="logout-btn">Log Out</a>
+            </div>
+          </li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <h1>Guides and Tutorials</h1>
+  <p class="quote">"Knowledge is power, knowledge is safety, knowledge is happiness." – Thomas Jefferson</p>
+
+  <div class="tutorials-container">
+    <div class="card" onclick="openModal('modal1')">
+      <img src="C:\Users\hazel\E-Response\images\Myanmar_Earthquake_41717.webp" alt="Jaw Injury Bandage" class="thumbnail" />
+      <div class="card-content">
+        <a href="#" class="card-title">Jaw Injury Bandage</a>
+        <p class="card-source">Singapore Emergency Responder Academy</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="openModal('modal2')">
+      <img src="C:\Users\hazel\E-Response\images\0.41239900_1486123644_40-20160215-dte.jpg" alt="Protect During Earthquake" class="thumbnail" />
+      <div class="card-content">
+        <a href="#" class="card-title">How to Protect Yourself During an Earthquake</a>
+        <p class="card-source">Disasters</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="openModal('modal3')">
+      <img src="C:\Users\hazel\E-Response\images\asd.webp" alt="How to Treat a Fracture" class="thumbnail" />
+      <div class="card-content">
+        <a href="#" class="card-title">How to Give First Aid and Treat a Fracture</a>
+      </div>
+    </div>
+
+    <div class="card" onclick="openModal('modal4')">
+      <img src="C:\Users\hazel\E-Response\images\ad.jpg" alt="The Earthquake Plan" class="thumbnail" />
+      <div class="card-content">
+        <a href="#" class="card-title">The Earthquake Plan</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal1')">&times;</span>
+      <h2>Jaw Injury Bandage</h2>
+      <p>This tutorial covers how to properly bandage and immobilize a jaw injury in emergency situations.</p>
+      <img src="C:\Users\hazel\E-Response\images\OIP (1).jfif" alt="Jaw Injury" style="width:100%; border-radius:10px;">
+    </div>
+  </div>
+
+  <div id="modal2" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal2')">&times;</span>
+      <h2>Protecting Yourself During an Earthquake</h2>
+      <p>Learn how to stay safe and protect yourself during seismic activity. Cover, hold, and stay alert.</p>
+      <img src="C:\Users\hazel\E-Response\images\asasd.webp" alt="Earthquake" style="width:100%; border-radius:10px;">
+    </div>
+  </div>
+
+  <div id="modal3" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal3')">&times;</span>
+      <h2>First Aid for Fractures</h2>
+      <p>This guide provides steps on assessing, stabilizing, and splinting fractures safely until help arrives.</p>
+      <img src="C:\Users\hazel\E-Response\images\zxcv.jpg" alt="Fracture" style="width:100%; border-radius:10px;">
+    </div>
+  </div>
+
+  <div id="modal4" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal4')">&times;</span>
+      <h2>The Earthquake Plan</h2>
+      <p>A guide on how to prepare and respond effectively when an earthquake occurs in your area.</p>
+      <img src="C:\Users\hazel\E-Response\images\OIP (2).jfif" alt="Earthquake Plan" style="width:100%; border-radius:10px;">
+    </div>
+  </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = "block";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const modals = document.querySelectorAll('.modal');
+      modals.forEach(modal => {
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
