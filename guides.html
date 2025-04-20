@@ -1,469 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>E-Response: Guides and Tutorials</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fbeeee;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    header {
-      background-color: #ffeaea;
-      padding: 15px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .header-container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo-title {
-      display: flex;
-      align-items: center;
-    }
-
-    .logo {
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-      border-radius: 50%;
-      object-fit: cover;
-      background-color: #c9302c; /* Fallback if image doesn't load */
-    }
-
-    .site-title {
-      font-size: 24px;
-      font-weight: bold;
-      color: #c9302c;
-    }
-
-    nav {
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #444;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      padding: 8px 12px;
-      border-radius: 4px;
-    }
-
-    .nav-links a:hover,
-    .dropdown-btn:hover {
-      color: #c9302c;
-      background-color: rgba(201, 48, 44, 0.1);
-    }
-
-    .dropdown {
-      position: relative;
-    }
-
-    .dropdown-btn {
-      background: none;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: 500;
-      color: #444;
-      padding: 8px 12px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .dropdown-btn::after {
-      content: "▼";
-      font-size: 10px;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: white;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      border-radius: 4px;
-      top: 100%;
-      left: 0;
-      min-width: 200px;
-      z-index: 10;
-      overflow: hidden;
-    }
-
-    .dropdown-content a {
-      display: block;
-      padding: 12px 16px;
-      color: #444;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-      color: #c9302c;
-      padding-left: 20px;
-    }
-
-    .dropdown:hover .dropdown-content {
-      display: block;
-      animation: fadeIn 0.3s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .page-title-section {
-      text-align: center;
-      padding: 40px 20px;
-      background-color: #fff;
-      margin-bottom: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    h1 {
-      color: #c9302c;
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-
-    .quote {
-      font-style: italic;
-      color: #666;
-      font-size: 18px;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .tutorials-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-      gap: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-
-    .card {
-      background-color: #fff;
-      display: flex;
-      gap: 20px;
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      align-items: center;
-      transition: all 0.3s ease;
-      cursor: pointer;
-      border: 1px solid transparent;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
-      border-color: #ffcaca;
-    }
-
-    .thumbnail {
-      width: 180px;
-      height: 120px;
-      object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-      background-color: #f0f0f0; /* Fallback if image doesn't load */
-    }
-
-    .card-content {
-      flex: 1;
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: bold;
-      color: #4b2c2c;
-      text-decoration: none;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .card-title:hover {
-      color: #c9302c;
-    }
-
-    .card-source {
-      font-size: 14px;
-      color: #666;
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .card-source::before {
-      content: "Source: ";
-      font-weight: 500;
-      margin-right: 5px;
-    }
-
-    /* Modal Styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 999;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.6);
-      backdrop-filter: blur(3px);
-    }
-
-    .modal-content {
-      background-color: #fff;
-      margin: 5% auto;
-      padding: 30px;
-      border-radius: 15px;
-      width: 90%;
-      max-width: 700px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.2);
-      animation: slideIn 0.3s ease;
-      position: relative;
-    }
-
-    @keyframes slideIn {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .close {
-      position: absolute;
-      right: 20px;
-      top: 15px;
-      color: #aaa;
-      font-size: 32px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: color 0.2s;
-      line-height: 1;
-      height: 30px;
-      width: 30px;
-      text-align: center;
-      border-radius: 50%;
-    }
-
-    .close:hover {
-      color: #c9302c;
-    }
-
-    .modal-header {
-      margin-bottom: 20px;
-      padding-bottom: 15px;
-      border-bottom: 1px solid #eee;
-    }
-
-    .modal-content h2 {
-      color: #c9302c;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .modal-content p {
-      line-height: 1.6;
-      margin-bottom: 20px;
-      color: #444;
-    }
-
-    .modal-content img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 20px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    }
-
-    .button-container {
-      display: flex;
-      gap: 15px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-
-    .video-link, .audio-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #c9302c;
-      color: white;
-      text-align: center;
-      padding: 12px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 6px rgba(201, 48, 44, 0.2);
-      flex: 1;
-      min-width: 200px;
-      border: none;
-      cursor: pointer;
-      font-size: 16px;
-    }
-
-    .video-link {
-      background-color: #c9302c;
-    }
-
-    .audio-button {
-      background-color: #444;
-    }
-
-    .video-link:hover, .audio-button:hover {
-      transform: translateY(-2px);
-    }
-
-    .video-link:hover {
-      background-color: #a52723;
-      box-shadow: 0 5px 10px rgba(201, 48, 44, 0.3);
-    }
-
-    .audio-button:hover {
-      background-color: #333;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    }
-
-    .video-link svg, .audio-button svg {
-      margin-right: 8px;
-    }
-
-    .audio-button.playing {
-      background-color: #777;
-    }
-
-    /* Instructions section */
-    .instructions {
-      background-color: #f9f9f9;
-      border-left: 4px solid #c9302c;
-      padding: 15px;
-      margin: 15px 0;
-      border-radius: 0 8px 8px 0;
-    }
-
-    .instructions h3 {
-      color: #c9302c;
-      margin-bottom: 10px;
-      font-size: 18px;
-    }
-
-    .instructions ol, .instructions ul {
-      padding-left: 20px;
-      margin-bottom: 10px;
-    }
-
-    .instructions li {
-      margin-bottom: 5px;
-    }
-
-    footer {
-      background-color: #ffeaea;
-      padding: 20px 0;
-      margin-top: 50px;
-      text-align: center;
-      color: #666;
-      font-size: 14px;
-    }
-
-    /* Audio playing indicator */
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-
-    .audio-button.playing svg {
-      animation: pulse 1.5s infinite;
-    }
-
-    @media (max-width: 768px) {
-      .tutorials-container {
-        grid-template-columns: 1fr;
-      }
-
-      .header-container {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-
-      nav {
-        width: 100%;
-      }
-
-      .nav-links {
-        width: 100%;
-        justify-content: space-between;
-      }
-
-      .card {
-        flex-direction: column;
-      }
-
-      .thumbnail {
-        width: 100%;
-        height: 180px;
-      }
-
-      .modal-content {
-        margin: 10% auto;
-        padding: 20px;
-        width: 95%;
-      }
-      
-      .button-container {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .nav-links {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-
-      .dropdown-content {
-        width: 100%;
-        position: relative;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="guides.css">
 </head>
 <body>
 
@@ -529,6 +70,22 @@
         <p class="card-source">Emergency Management Institute</p>
       </div>
     </div>
+
+    <div class="card" onclick="openModal('modal5')">
+      <img src="C:\Users\hazel\E-Response\images\modal5.jpg" alt="CPR Technique" class="thumbnail" />
+      <div class="card-content">
+        <a href="#" class="card-title">Basic CPR: The Chain of Survival</a>
+        <p class="card-source">American Heart Association</p>
+      </div>
+    </div>
+
+    <div class="card" onclick="openModal('modal6')">
+      <img src="C:\Users\hazel\E-Response\images\modal6.jfif" alt="Home Fire Safety" class="thumbnail" />
+      <div class="card-content">
+        <a href="#" class="card-title">Home Fire Safety and Evacuation Planning</a>
+        <p class="card-source">National Fire Protection Association</p>
+      </div>
+    </div>
   </div>
 
   <!-- Modals with instructions and audio/video options -->
@@ -538,7 +95,7 @@
       <div class="modal-header">
         <h2>Jaw Injury Bandage Technique</h2>
       </div>
-      <img src="C:\Users\hazel\E-Response\images\modal1.jpg" alt="Jaw Injury Bandaging Demonstration">
+      <img src="C:\Users\hazel\E-Response\images\modal01.png" alt="Jaw Injury Bandaging Demonstration">
       
       <div class="instructions" id="instructions-modal1">
         <h3>Step-by-Step Instructions:</h3>
@@ -579,7 +136,7 @@
       <div class="modal-header">
         <h2>Protecting Yourself During an Earthquake</h2>
       </div>
-      <img src="/api/placeholder/650/350" alt="Earthquake Safety Demonstration">
+      <img src="C:\Users\hazel\E-Response\images\modal02.png" alt="Earthquake Safety Demonstration">
       
       <div class="instructions" id="instructions-modal2">
         <h3>What to Do During an Earthquake:</h3>
@@ -619,7 +176,7 @@
       <div class="modal-header">
         <h2>First Aid for Fractures</h2>
       </div>
-      <img src="/api/placeholder/650/350" alt="Fracture First Aid Demonstration">
+      <img src="C:\Users\hazel\E-Response\images\modal03.png" alt="Fracture First Aid Demonstration">
       
       <div class="instructions" id="instructions-modal3">
         <h3>How to Treat a Suspected Fracture:</h3>
@@ -660,7 +217,7 @@
       <div class="modal-header">
         <h2>The Earthquake Preparedness Plan</h2>
       </div>
-      <img src="/api/placeholder/650/350" alt="Earthquake Preparedness Diagram">
+      <img src="C:\Users\hazel\E-Response\images\modal04.png" alt="Earthquake Preparedness Diagram">
       
       <div class="instructions" id="instructions-modal4">
         <h3>Before an Earthquake:</h3>
@@ -703,84 +260,111 @@
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 E-Response. All rights reserved.</p>
-  </footer>
-
-  <script>
-    // Create an object to store audio elements
-    const audioElements = {};
-    
-    function playAudio(modalId) {
-      // Check if this audio is already created
-      if (!audioElements[modalId]) {
-        // Create a new audio element
-        const audio = new Audio(`audio/${modalId}.mp3`);
-        audioElements[modalId] = audio;
+  <div id="modal5" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal5')">&times;</span>
+      <div class="modal-header">
+        <h2>Basic CPR: The Chain of Survival</h2>
+      </div>
+      <img src="C:\Users\hazel\E-Response\images\modal05.png" alt="CPR Demonstration">
+      
+      <div class="instructions" id="instructions-modal5">
+        <h3>Adult CPR Steps:</h3>
+        <ol>
+          <li><strong>Check for responsiveness:</strong> Tap the person and shout "Are you okay?"</li>
+          <li><strong>Call for help:</strong> Have someone call emergency services immediately.</li>
+          <li><strong>Check for breathing:</strong> Look, listen, and feel for breathing for no more than 10 seconds.</li>
+          <li><strong>Begin chest compressions:</strong> Place hands in center of chest, compress at least 2 inches deep.</li>
+          <li><strong>Compression rate:</strong> Push hard and fast at a rate of 100-120 compressions per minute.</li>
+          <li><strong>Rescue breaths:</strong> After 30 compressions, give 2 rescue breaths (if trained).</li>
+          <li><strong>Continue CPR:</strong> Maintain cycles of 30 compressions and 2 breaths until help arrives.</li>
+          <li><strong>Use AED:</strong> If available, turn it on and follow the verbal instructions.</li>
+        </ol>
         
-        // Add event listeners for audio states
-        audio.addEventListener('ended', function() {
-          document.querySelector(`#${modalId} .audio-button`).classList.remove('playing');
-        });
-      }
+        <h3>Remember:</h3>
+        <ul>
+          <li>Proper hand position is key: center of chest, between nipples</li>
+          <li>Allow chest to fully recoil between compressions</li>
+          <li>Minimize interruptions in compressions</li>
+          <li>If untrained, perform hands-only CPR (compressions without rescue breaths)</li>
+        </ul>
+      </div>
       
-      const audioElement = audioElements[modalId];
-      const button = document.querySelector(`#${modalId} .audio-button`);
-      
-      // If audio is already playing, pause it
-      if (!audioElement.paused) {
-        audioElement.pause();
-        audioElement.currentTime = 0;
-        button.classList.remove('playing');
-        button.innerHTML = `
+      <div class="button-container">
+        <a href="https://www.youtube.com/watch?v=2ffYeuTjjvI" target="_blank" class="video-link">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="2"/>
+            <path d="M10 8L16 12L10 16V8Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Watch Video Tutorial
+        </a>
+        <button class="audio-button" onclick="playAudio('modal5')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 11.995C17.0039 13.3208 16.4774 14.5924 15.54 15.53" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M19.07 5.93C20.9447 7.80528 21.9979 10.3489 21.9979 13C21.9979 15.6511 20.9447 18.1947 19.07 20.07" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           Listen to Instructions
-        `;
-      } else {
-        // Play the audio
-        audioElement.play();
-        button.classList.add('playing');
-        button.innerHTML = `
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal6" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('modal6')">&times;</span>
+      <div class="modal-header">
+        <h2>Home Fire Safety and Evacuation Planning</h2>
+      </div>
+      <img src="C:\Users\hazel\E-Response\images\modal06.png" alt="Home Fire Safety Diagram">
+      
+      <div class="instructions" id="instructions-modal6">
+        <h3>Fire Prevention Tips:</h3>
+        <ul>
+          <li>Install smoke alarms on every level of your home and test them monthly.</li>
+          <li>Keep flammable items at least three feet from heat sources.</li>
+          <li>Never leave cooking unattended.</li>
+          <li>Check electrical cords for damage and don't overload outlets.</li>
+          <li>Keep portable heaters at least three feet from anything that can burn.</li>
+          <li>Have your heating system serviced annually by a qualified professional.</li>
+        </ul>
+        
+        <h3>Creating a Home Escape Plan:</h3>
+        <ol>
+          <li><strong>Draw a floor plan</strong> of your home showing all possible exits.</li>
+          <li><strong>Mark two ways out</strong> of each room, including windows and doors.</li>
+          <li><strong>Designate a meeting place</strong> outside where everyone will gather.</li>
+          <li><strong>Practice your fire drill</strong> both during day and night.</li>
+          <li><strong>If smoke is present,</strong> get low and go under the smoke to exit.</li>
+          <li><strong>Remember:</strong> Once you get out, stay out. Never go back inside a burning building.</li>
+        </ol>
+      </div>
+      
+      <div class="button-container">
+        <a href="https://www.youtube.com/watch?v=2ffYeuTjjvI" target="_blank" class="video-link">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="white" stroke-width="2"/>
+            <path d="M10 8L16 12L10 16V8Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Watch Video Tutorial
+        </a>
+        <button class="audio-button" onclick="playAudio('modal6')">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M11 5L6 9H2V15H6L11 19V5Z" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M15.54 8.46C16.4774 9.39764 17.0039 10.6692 17.0039 11.995C17.0039 13.3208 16.4774 14.5924 15.54 15.53" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             <path d="M19.07 5.93C20.9447 7.80528 21.9979 10.3489 21.9979 13C21.9979 15.6511 20.9447 18.1947 19.07 20.07" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          Stop Audio
-        `;
-      }
-    }
-    
-    // Function to open modal
-    function openModal(modalId) {
-      document.getElementById(modalId).style.display = "block";
-      document.body.style.overflow = "hidden";
-    }
-    
-    // Function to close modal
-    function closeModal(modalId) {
-      document.getElementById(modalId).style.display = "none";
-      document.body.style.overflow = "auto";
-      
-      // Stop audio if playing when modal is closed
-      if (audioElements[modalId] && !audioElements[modalId].paused) {
-        audioElements[modalId].pause();
-        audioElements[modalId].currentTime = 0;
-        document.querySelector(`#${modalId} .audio-button`).classList.remove('playing');
-      }
-    }
-    
-    // Close modal if clicked outside of content
-    window.onclick = function(event) {
-      if (event.target.className === "modal") {
-        closeModal(event.target.id);
-      }
-    }
-  </script>
+          Listen to Instructions
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 E-Response. All rights reserved.</p>
+  </footer>
+
+  <script src="guides.js" defer></script>
 
 </body>
 </html>

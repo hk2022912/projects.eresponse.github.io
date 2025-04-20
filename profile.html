@@ -159,6 +159,10 @@
     .dropdown:hover .dropdown-content {
       display: block;
     }
+
+    button#menu-dropdown-btn {
+        margin-top: 1px;
+    }
     
     /* Mobile Styles for Dropdown */
     .hamburger {
@@ -264,8 +268,8 @@
       transition: all 0.3s ease;
     }
     
-    /* Profile Image Container and Styles */
-    .profile-image-container {
+/* Profile Image Container and Styles */
+.profile-image-container {
       position: relative;
       width: 120px;
       height: 120px;
@@ -579,7 +583,7 @@
       <div class="profile-left" id="med-info-card">
         <!-- Profile Image with Change Button -->
         <div class="profile-image-container">
-          <img src="images/profileicon.jpg" alt="Profile Picture" class="profile-image" id="profile-image">
+          <img src="images/profileicon.jpg" class="profile-image" id="profile-image">
           <div class="change-photo-btn" onclick="openPhotoModal()">
             <span>📷</span>
           </div>
@@ -680,10 +684,10 @@
         <p style="text-align: center; margin: 10px 0;">Or choose from default images</p>
         
         <div class="default-pics">
-          <img src="images/profileicon.jpg" alt="Default 1" class="default-pic" onclick="selectDefaultImage('images/1.jpg')">
-          <img src="images/profile1.jpg" alt="Default 2" class="default-pic" onclick="selectDefaultImage('images/2.jpg')">
-          <img src="images/profile2.jpg" alt="Default 3" class="default-pic" onclick="selectDefaultImage('images/3.jpg')">
-          <img src="images/profile3.jpg" alt="Default 4" class="default-pic" onclick="selectDefaultImage('images/4.jpg')">
+          <img src="images/profile1.jpg" alt="Default 1" class="default-pic" onclick="selectDefaultImage('images/profile1.jpg')">
+          <img src="images/profile2.jpg" alt="Default 2" class="default-pic" onclick="selectDefaultImage('images/profile2.jpg')">
+          <img src="images/profile3.jpg" alt="Default 3" class="default-pic" onclick="selectDefaultImage('images/profile3.jpg')">
+          <img src="images/profile4.jpg" alt="Default 4" class="default-pic" onclick="selectDefaultImage('images/profile4.jpg')">
         </div>
         
         <button onclick="applyPhotoChange()" style="margin-top: 20px;">Apply</button>

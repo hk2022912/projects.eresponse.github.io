@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Response - User Profile</title>
+  <link rel="stylesheet" href="profile.css">
+
+</head>
+<body>    
+  <header>
+    <div class="container header-container">
+      <div class="logo-title">
+        <img src="dp.png" alt="E-Response Logo" class="logo" width="40" height="40" />
+        <h1 class="site-title">E-Response</h1>
+      </div>
+      <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+      <nav>
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="homepage.html">Home</a></li>
+          <li class="dropdown">
+            <button class="dropdown-btn" id="menu-dropdown-btn" aria-haspopup="true" aria-expanded="false">Menu</button>
+            <div class="dropdown-content" id="menu-dropdown" role="menu">
+              <a href="preparedness.html" role="menuitem">Preparedness</a>
+              <a href="emergency_contacts.html" role="menuitem">Emergency Contacts</a>
+              <a href="guides.html" role="menuitem">Guides and Tutorials</a>
+              <a href="#" class="logout-btn" role="menuitem">Log Out</a>
+            </div>
+          </li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="profile.html" aria-current="page">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Profile Container -->
+  <main class="container">
+    <h2 style="margin: 1.5rem 0; color: var(--primary-color);">User Profile</h2>
+    
+    <form id="profile-form" class="profile-container">
+      <!-- Medical Info Card -->
+      <div class="profile-left" id="med-info-card">
+        <!-- Profile Image with Change Button -->
+        <div class="profile-image-container">
+          <img src="images/profileicon.jpg" alt="Profile Picture" class="profile-image" id="profile-image" width="140" height="140">
+          <div class="change-photo-btn" role="button" tabindex="0" onclick="openPhotoModal()" aria-label="Change profile photo">
+            <span>📷</span>
+          </div>
+        </div>
+        
+        <h2 class="profile-title">Medical Information</h2>
+        <div class="edit-indicator" id="med-edit-indicator">Editing Mode</div>
+        
+        <div class="profile-section">
+          <label for="blood">Blood Type</label>
+          <input type="text" id="blood" disabled placeholder="Enter your blood type" aria-describedby="blood-help">
+          <small id="blood-help" class="help-text"></small>
+        </div>
+        <div class="profile-section">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" disabled placeholder="Enter your weight" min="1" max="300">
+        </div>
+        <div class="profile-section">
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" disabled placeholder="Enter your height" min="1" max="300">
+        </div>
+        <div class="profile-section">
+          <label for="allergies">Allergies</label>
+          <input type="text" id="allergies" disabled placeholder="List any allergies">
+        </div>
+        <div class="profile-section">
+          <label for="medications">Current Medications</label>
+          <input type="text" id="medications" disabled placeholder="List any medications">
+        </div>
+
+        <div class="show-info" role="button" tabindex="0" onclick="toggleInfo()" aria-expanded="false" aria-controls="extra-info">
+          View Personal Details
+        </div>
+      </div>
+
+      <!-- Full User Info Card -->
+      <div class="profile-right hidden" id="extra-info">
+        <h2 class="profile-title">Personal Information</h2>
+        <div class="edit-indicator" id="personal-edit-indicator">Editing Mode</div>
+        
+        <div class="form-columns">
+          <div class="profile-section">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" disabled placeholder="Enter your full name" required>
+          </div>
+          <div class="profile-section">
+            <label for="sex">Sex</label>
+            <input type="text" id="sex" disabled placeholder="Enter your sex">
+          </div>
+          <div class="profile-section">
+            <label for="age">Age</label>
+            <input type="number" id="age" disabled placeholder="Enter your age" min="1" max="120">
+          </div>
+          <div class="profile-section">
+            <label for="birthdate">Date of Birth</label>
+            <input type="date" id="birthdate" disabled placeholder="MM/DD/YYYY">
+          </div>
+          <div class="profile-section">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" disabled placeholder="Enter your email">
+          </div>
+          <div class="profile-section">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" disabled placeholder="Enter your phone number">
+          </div>
+          <div class="profile-section">
+            <label for="address">Address</label>
+            <input type="text" id="address" disabled placeholder="Enter your address">
+          </div>
+          <div class="profile-section">
+            <label for="emergency-contact">Emergency Contact</label>
+            <input type="text" id="emergency-contact" disabled placeholder="Name and phone number">
+          </div>
+        </div>
+      </div>
+    </form>
+    
+    <!-- Centered Edit Button -->
+    <div style="text-align: center; margin-bottom: 50px;">
+      <button id="edit-btn" type="button" onclick="toggleEdit()">Edit Profile</button>
+    </div>
+
+    <!-- Success message toast -->
+    <div class="success-message" id="success-message">
+      Profile updated successfully!
+    </div>
+  </main>
+  
+  <!-- Photo Selection Modal -->
+  <div id="photo-modal" class="modal" role="dialog" aria-labelledby="photo-modal-title">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closePhotoModal()" aria-label="Close modal">&times;</span>
+      <h3 id="photo-modal-title" style="text-align: center; margin-bottom: 20px;">Change Profile Photo</h3>
+      
+      <div class="image-preview">
+        <img src="images/profileicon.jpg" alt="Profile Preview" id="preview-image" width="160" height="160">
+      </div>
+      
+      <div class="upload-options">
+        <label for="photo-upload-modal" class="upload-btn">
+          Upload from device
+          <input type="file" id="photo-upload-modal" accept="image/*" onchange="previewImageModal(event)" style="display: none;">
+        </label>
+        
+        <p style="text-align: center; margin: 15px 0;">Or choose from default images</p>
+        
+        <div class="default-pics">
+          <img src="images/profileicon.jpg" alt="Default 1" class="default-pic selected" onclick="selectDefaultImage('images/profileicon.jpg')">
+          <img src="images/profile1.jpg" alt="Default 2" class="default-pic" onclick="selectDefaultImage('images/profile1.jpg')">
+          <img src="images/profile2.jpg" alt="Default 3" class="default-pic" onclick="selectDefaultImage('images/profile2.jpg')">
+          <img src="images/profile3.jpg" alt="Default 4" class="default-pic" onclick="selectDefaultImage('images/profile3.jpg')">
+        </div>
+        
+        <button onclick="applyPhotoChange()" style="margin-top: 20px;">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Edit mode toggle function
+    function toggleEdit() {
+      const allInputs = document.querySelectorAll('input');
+      const button = document.getElementById('edit-btn');
+      const medInfoCard = document.getElementById('med-info-card');
+      const extraInfo = document.getElementById('extra-info');
+      const medEditIndicator = document.getElementById('med-edit-indicator');
+      const personalEditIndicator = document.getElementById('personal-edit-indicator');
+      const changePhotoBtn = document.querySelector('.change-photo-btn');
+      
+      const isEditing = button.innerText === "Edit Profile";
+
+      // Toggle input fields
+      allInputs.forEach(input => {
+        if (input.id !== 'photo-upload' && input.id !== 'photo-upload-modal') {
+          input.disabled = !isEditing;
+        }
+      });
+
+      // Toggle button text
+      button.innerText = isEditing ? "Save Changes" : "Edit Profile";
+      
+      // Toggle visibility of change photo button
+      changePhotoBtn.style.display = isEditing ? 'flex' : 'none';
+      
+      // Visual feedback for edit mode
+      if (isEditing) {
+        medInfoCard.classList.add('editing-mode');
+        medEditIndicator.style.display = 'inline-block';
+        
+        if (!extraInfo.classList.contains('hidden')) {
+          extraInfo.classList.add('editing-mode');
+          personalEditIndicator.style.display = 'inline-block';
+        }
+        
+        // Show both sections when entering edit mode
+        extraInfo.classList.remove('hidden');
+      } else {
+        // Save the changes (in a real app, you would send this to a server)
+        saveChanges();
+        
+        medInfoCard.classList.remove('editing-mode');
+        extraInfo.classList.remove('editing-mode');
+        medEditIndicator.style.display = 'none';
+        personalEditIndicator.style.display = 'none';
+      }
+    }
+
+    // Toggle info panel visibility
+    function toggleInfo() {
+      const extraInfo = document.getElementById('extra-info');
+      const toggle = document.querySelector('.show-info');
+      
+      extraInfo.classList.toggle('hidden');
+      toggle.innerText = extraInfo.classList.contains('hidden') ? 
+                        'View Personal Details' : 'Hide Personal Details';
+      
+      // Apply editing styles if in edit mode
+      if (document.getElementById('edit-btn').innerText === "Save Changes" && 
+          !extraInfo.classList.contains('hidden')) {
+        extraInfo.classList.add('editing-mode');
+        document.getElementById('personal-edit-indicator').style.display = 'inline-block';
+      }
+    }
+    
+    // Save changes function - would connect to backend in production
+    function saveChanges() {
+      // Here you would normally send data to a server
+      // For now, we'll just show an alert
+      console.log("Changes saved!");
+      
+      // Sample data collection
+      const medicalData = {
+        bloodType: document.getElementById('blood').value,
+        weight: document.getElementById('weight').value,
+        height: document.getElementById('height').value,
+        allergies: document.getElementById('allergies').value,
+        medications: document.getElementById('medications').value
+      };
+      
+      const personalData = {
+        name: document.getElementById('name').value,
+        sex: document.getElementById('sex').value,
+        age: document.getElementById('age').value,
+        birthdate: document.getElementById('birthdate').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        emergencyContact: document.getElementById('emergency-contact').value
+      };
+      
+      // Get profile image source
+      const profileImageSrc = document.getElementById('profile-image').src;
+      
+      // In a real application, you would send this data to your server
+      console.log("Medical data:", medicalData);
+      console.log("Personal data:", personalData);
+      console.log("Profile image:", profileImageSrc);
+      
+      // Show success message (in a real app, you'd use better feedback)
+      alert("Profile updated successfully!");
+    }
+    
+    // Photo modal functions
+    function openPhotoModal() {
+      // Only allow opening the modal in edit mode
+      if (document.getElementById('edit-btn').innerText === "Save Changes") {
+        document.getElementById('photo-modal').style.display = 'block';
+        // Set the preview image to match the current profile image
+        document.getElementById('preview-image').src = document.getElementById('profile-image').src;
+      }
+    }
+    
+    function closePhotoModal() {
+      document.getElementById('photo-modal').style.display = 'none';
+    }
+    
+    // Handle file upload directly from profile
+    function previewImage(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const output = document.getElementById('profile-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    
+    // Handle file upload in modal
+    function previewImageModal(event) {
+      const reader = new FileReader();
+      reader.onload = function() {
+        const output = document.getElementById('preview-image');
+        output.src = reader.result;
+      };
+      reader.readAsDataURL(event.target.files[0]);
+    }
+    
+    // Select default image in modal
+    function selectDefaultImage(imageSrc) {
+      document.getElementById('preview-image').src = imageSrc;
+      
+      // Highlight the selected default image
+      const defaultPics = document.querySelectorAll('.default-pic');
+      defaultPics.forEach(pic => {
+        if (pic.src.includes(imageSrc)) {
+          pic.style.border = '2px solid #d9534f';
+          pic.style.transform = 'scale(1.1)';
+        } else {
+          pic.style.border = '2px solid transparent';
+          pic.style.transform = 'scale(1)';
+        }
+      });
+    }
+    
+    // Apply the selected image from modal to profile
+    function applyPhotoChange() {
+      const previewImage = document.getElementById('preview-image').src;
+      document.getElementById('profile-image').src = previewImage;
+      closePhotoModal();
+    }
+    
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('nav-menu').classList.toggle('active');
+    });
+    
+    // Handle mobile dropdown menu
+    document.addEventListener('DOMContentLoaded', function() {
+      if (window.innerWidth <= 768) {
+        document.getElementById('menu-dropdown-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          document.getElementById('menu-dropdown').classList.toggle('show');
+        });
+      } else {
+        // Desktop dropdown hover behavior
+        document.querySelector('.dropdown').addEventListener('mouseenter', function() {
+          document.getElementById('menu-dropdown').style.display = 'block';
+        });
+        
+        document.querySelector('.dropdown').addEventListener('mouseleave', function() {
+          document.getElementById('menu-dropdown').style.display = 'none';
+        });
+      }
+      
+      // Hide the change photo button initially (only visible in edit mode)
+      document.querySelector('.change-photo-btn').style.display = 'none';
+      
+      // Optional: Load saved data
+      loadSavedData();
+    });
+    
+    // Close modal when clicking outside of it
+    window.onclick = function(event) {
+      const modal = document.getElementById('photo-modal');
+      if (event.target == modal) {
+        closePhotoModal();
+      }
+    }
+    
+    // Optional: Load saved data from localStorage or server
+    function loadSavedData() {
+      // In a real application, you would fetch this data from your server
+      // This is just a placeholder example using hardcoded values
+      document.getElementById('blood').value = "O+";
+      document.getElementById('weight').value = "70";
+      document.getElementById('height').value = "175";
+      document.getElementById('name').value = "John Doe";
+      // Additional fields would be populated here
+    }
+  </script>
+
+</body>
+</html>
