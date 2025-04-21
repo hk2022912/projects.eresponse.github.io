@@ -1,642 +1,899 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>E-Response - Earthquake Emergency Response</title>
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    /* General Styles */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #fdf2f2;
-      color: #333;
-      line-height: 1.6;
-    }
-    
-    /* Container */
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    
-    /* Header */
-    header {
-      background-color: #ffeaea;
-      padding: 15px 0;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    
-    .logo-title {
-      display: flex;
-      align-items: center;
-    }
-    
-    .logo {
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    
-    .site-title {
-      font-size: 24px;
-      font-weight: bold;
-      color: #c9302c;
-    }
-    
-    .nav-links {
-      list-style: none;
-      display: flex;
-      gap: 20px;
-      align-items: center;
-    }
-    
-    .nav-links a {
-      text-decoration: none;
-      color: #444;
-      font-weight: 500;
-      transition: color 0.3s ease;
-      padding: 8px 12px;
-      border-radius: 4px;
-    }
-    
-    .nav-links a:hover {
-      color: #c9302c;
-      background-color: rgba(201, 48, 44, 0.1);
-    }
-    
-    /* Dropdown Menu */
-    .dropdown {
-      position: relative;
-      display: inline-block;
-    }
-    
-    .dropdown-btn {
-      text-decoration: none;
-      color: #444;
-      font-weight: 500;
-      transition: color 0.3s ease;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    .dropdown-btn:hover {
-      color: #c9302c;
-      background-color: rgba(201, 48, 44, 0.1);
-    }
-    
-    .dropdown-btn::after {
-      content: '▼';
-      font-size: 10px;
-      margin-left: 5px;
-    }
-    
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #fff;
-      min-width: 200px;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      border-radius: 4px;
-      z-index: 10;
-      top: 100%;
-      left: 0;
-    }
-    
-    .dropdown-content a {
-      color: #444;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      transition: background-color 0.3s ease;
-    }
-    
-    .dropdown-content a:hover {
-      background-color: #f1f1f1;
-      color: #c9302c;
-    }
-    
-    .dropdown-content .logout-btn {
-      color: #c9302c;
-      font-weight: 500;
-      border-top: 1px solid #eee;
-    }
-    
-    .dropdown:hover .dropdown-content {
-      display: block;
-    }
-    
-    /* Mobile Styles for Dropdown */
-    .hamburger {
-      display: none;
-      cursor: pointer;
-      background: none;
-      border: none;
-      font-size: 24px;
-    }
-    
-    /* Hero Section */
-    .hero {
-      position: relative;
-      height: 500px;
-      background-color: #333; /* Fallback */
-      background: url('images/Myanmar_Earthquake_41717.webp') no-repeat center center/cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: cover;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 30px;
-    }
-    
-    .hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      z-index: 1;
-    }
-    
-    .overlay-text {
-      position: relative;
-      z-index: 2;
-      color: #fff;
-      font-size: 22px;
-      max-width: 800px;
-      text-align: center;
-      padding: 30px 40px;
-      background: rgba(201, 48, 44, 0.7);
-      border-radius: 8px;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-    
-    /* News Section */
-    .news {
-      background-color: #d9534f;
-      color: #fff;
-      padding: 60px 0;
-      margin-bottom: 30px;
-    }
-    
-    .news h2 {
-      text-align: center;
-      margin-bottom: 40px;
-      font-size: 32px;
-      position: relative;
-      padding-bottom: 15px;
-    }
-    
-    .news h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background-color: #fff;
-      border-radius: 2px;
-    }
-    
-    .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .card {
-      background-color: #fff;
-      color: #333;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    }
-    
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-    
-    .card-content {
-      padding: 20px;
-    }
-    
-    .card h3 {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #c9302c;
-    }
-    
-    .card p {
-      margin-bottom: 15px;
-      color: #555;
-    }
-    
-    .card-link {
-      display: inline-block;
-      padding: 8px 20px;
-      background-color: #d9534f;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 4px;
-      font-weight: 500;
-      transition: background-color 0.3s ease;
-    }
-    
-    .card-link:hover {
-      background-color: #c9302c;
-    }
-    
-    /* Information Section */
-    .info-section {
-      padding: 60px 0;
-      background-color: #f8f8f8;
-    }
-    
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-    }
-    
-    .info-item {
-      background-color: #fff;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-    }
-    
-    .info-icon {
-      font-size: 36px;
-      color: #d9534f;
-      margin-bottom: 15px;
-    }
-    
-    .info-item h3 {
-      margin-bottom: 15px;
-      color: #333;
-    }
-    
-    /* Footer */
-    footer {
-      background-color: #333;
-      color: #fff;
-      padding: 40px 0 20px;
-    }
-    
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 30px;
-      margin-bottom: 20px;
-    }
-    
-    .footer-section h3 {
-      margin-bottom: 20px;
-      font-size: 18px;
-      position: relative;
-      padding-bottom: 10px;
-    }
-    
-    .footer-section h3::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 50px;
-      height: 2px;
-      background-color: #d9534f;
-    }
-    
-    .footer-links {
-      list-style: none;
-    }
-    
-    .footer-links li {
-      margin-bottom: 10px;
-    }
-    
-    .footer-links a {
-      color: #ddd;
-      text-decoration: none;
-      transition: color 0.3s ease;
-    }
-    
-    .footer-links a:hover {
-      color: #d9534f;
-    }
-    
-    .social-links {
-      display: flex;
-      gap: 15px;
-      margin-top: 15px;
-    }
-    
-    .social-icon {
-      display: inline-block;
-      width: 36px;
-      height: 36px;
-      background-color: #444;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      text-decoration: none;
-      transition: background-color 0.3s ease;
-    }
-    
-    .social-icon:hover {
-      background-color: #d9534f;
-    }
-    
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid #444;
-      font-size: 14px;
-      color: #aaa;
-    }
-    
-    /* Responsive styles */
-    @media (max-width: 768px) {
-      header .container {
-        padding: 15px 20px;
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>E-Response - Earthquake Emergency Response</title>
+    <style>
+      /* Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
       
-      .hamburger {
-        display: block;
+      /* General Styles */
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #fdf2f2;
+        color: #333;
+        line-height: 1.6;
       }
       
-      nav {
-        position: absolute;
-        top: 80px;
-        left: 0;
-        width: 100%;
+      /* Container */
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      
+      /* Header */
+      header {
         background-color: #ffeaea;
-        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+      
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .logo-title {
+        display: flex;
+        align-items: center;
+      }
+      
+      .logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+      
+      .site-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #c9302c;
       }
       
       .nav-links {
-        position: static;
-        flex-direction: column;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        padding: 0;
-        gap: 0;
-        align-items: flex-start;
+        list-style: none;
+        display: flex;
+        gap: 20px;
+        align-items: center;
       }
       
-      .nav-links.active {
-        max-height: 500px;
+      .nav-links a {
+        text-decoration: none;
+        color: #444;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        padding: 8px 12px;
+        border-radius: 4px;
       }
       
-      .nav-links li {
-        width: 100%;
+      .nav-links a:hover {
+        color: #c9302c;
+        background-color: rgba(201, 48, 44, 0.1);
       }
       
-      .nav-links a, .dropdown-btn {
-        display: block;
-        width: 100%;
-        padding: 15px 20px;
-        margin: 0;
-        border-bottom: 1px solid rgba(0,0,0,0.05);
-      }
-      
+      /* Dropdown Menu */
       .dropdown {
-        width: 100%;
+        position: relative;
+        display: inline-block;
+      }
+      
+      .dropdown-btn {
+        text-decoration: none;
+        color: #444;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 16px;
+        display: flex;
+        align-items: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+      
+      .dropdown-btn:hover {
+        color: #c9302c;
+        background-color: rgba(201, 48, 44, 0.1);
+      }
+      
+      .dropdown-btn::after {
+        content: '▼';
+        font-size: 10px;
+        margin-left: 5px;
       }
       
       .dropdown-content {
-        position: static;
-        box-shadow: none;
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-        padding-left: 20px;
-      }
-      
-      .dropdown-content.show {
-        max-height: 300px;
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        min-width: 200px;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        border-radius: 4px;
+        z-index: 10;
+        top: 100%;
+        left: 0;
       }
       
       .dropdown-content a {
-        padding: 10px 20px;
-        background-color: rgba(255, 255, 255, 0.5);
+        color: #444;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease;
+      }
+      
+      .dropdown-content a:hover {
+        background-color: #f1f1f1;
+        color: #c9302c;
+      }
+      
+      .dropdown-content .logout-btn {
+        color: #c9302c;
+        font-weight: 500;
+        border-top: 1px solid #eee;
+      }
+      
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      
+      /* Mobile Styles for Dropdown */
+      .hamburger {
+        display: none;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 24px;
+      }
+      
+      /* Hero Section */
+      .hero {
+        position: relative;
+        height: 500px;
+        background-color: #333; /* Fallback */
+        background: url('images/Myanmar_Earthquake_41717.webp') no-repeat center center/cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+      
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        z-index: 1;
       }
       
       .overlay-text {
-        font-size: 18px;
-        padding: 20px;
+        position: relative;
+        z-index: 2;
+        color: #fff;
+        font-size: 22px;
+        max-width: 800px;
+        text-align: center;
+        padding: 30px 40px;
+        background: rgba(201, 48, 44, 0.7);
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       }
       
-      .hero {
-        height: 400px;
+      /* Real-time News Section */
+      .realtime-news {
+        background-color: #b23c39;
+        color: #fff;
+        padding: 60px 0;
+        margin-bottom: 30px;
+        position: relative;
+      }
+      
+      .realtime-news h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 32px;
+        position: relative;
+        padding-bottom: 15px;
+      }
+      
+      .realtime-news h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: #fff;
+        border-radius: 2px;
+      }
+
+      .realtime-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background-color: #fff;
+        color: #c9302c;
+        padding: 5px 15px;
+        border-radius: 20px;
+        font-weight: bold;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      }
+
+      .realtime-badge::before {
+        content: '';
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        background-color: #c9302c;
+        border-radius: 50%;
+        margin-right: 8px;
+        animation: pulse 1.5s infinite;
+      }
+
+      @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1; }
+      }
+      
+      /* News Section */
+      .news {
+        background-color: #d9534f;
+        color: #fff;
+        padding: 60px 0;
+        margin-bottom: 30px;
       }
       
       .news h2 {
-        font-size: 28px;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 32px;
+        position: relative;
+        padding-bottom: 15px;
       }
       
-      .info-grid, .card-grid {
-        grid-template-columns: 1fr;
+      .news h2::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background-color: #fff;
+        border-radius: 2px;
       }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <div class="container header-container">
-      <div class="logo-title">
-        <img src="dp.png" alt="E-Response Logo" class="logo" />
-        <h1 class="site-title">E-Response</h1>
-      </div>
-      <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
-      <nav>
-        <ul class="nav-links" id="nav-menu">
-          <li><a href="homepage.html">Home</a></li>
-          <li class="dropdown">
-            <button class="dropdown-btn" id="menu-dropdown-btn">Menu</button>
-            <div class="dropdown-content" id="menu-dropdown">
-              <a href="preparedness.html">Preparedness</a>
-              <a href="emergency_contacts.html">Emergency Contacts</a>
-              <a href="guides.html">Guides and Tutorials</a>
+      
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      
+      .card {
+        background-color: #fff;
+        color: #333;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+      }
+      
+      .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+      
+      .card-content {
+        padding: 20px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .card h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #c9302c;
+      }
+      
+      .card p {
+        margin-bottom: 15px;
+        color: #555;
+        flex-grow: 1;
+      }
 
-              <a href="#" class="logout-btn">Log Out</a>
+      .card-meta {
+        font-size: 12px;
+        color: #777;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      .card-link {
+        display: inline-block;
+        padding: 8px 20px;
+        background-color: #d9534f;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        align-self: flex-start;
+        margin-top: auto;
+      }
+      
+      .card-link:hover {
+        background-color: #c9302c;
+      }
+
+      /* Loading spinner */
+      .loading-spinner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+      }
+
+      .spinner {
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top: 4px solid #fff;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Error message */
+      .error-message {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #c9302c;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        margin: 0 auto;
+        max-width: 80%;
+      }
+
+      /* Refresh button */
+      .refresh-button {
+        background-color: #fff;
+        color: #c9302c;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        margin: 30px auto 0;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .refresh-button:hover {
+        background-color: #f8f8f8;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      .refresh-button::before {
+        content: '↻';
+        font-size: 18px;
+        margin-right: 8px;
+      }
+
+      .refresh-button:active {
+        transform: translateY(1px);
+      }
+      
+      /* Information Section */
+      .info-section {
+        padding: 60px 0;
+        background-color: #f8f8f8;
+      }
+      
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      
+      .info-item {
+        background-color: #fff;
+        padding: 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      
+      .info-icon {
+        font-size: 36px;
+        color: #d9534f;
+        margin-bottom: 15px;
+      }
+      
+      .info-item h3 {
+        margin-bottom: 15px;
+        color: #333;
+      }
+      
+      /* Footer */
+      footer {
+        background-color: #333;
+        color: #fff;
+        padding: 40px 0 20px;
+      }
+      
+      .footer-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 20px;
+      }
+      
+      .footer-section h3 {
+        margin-bottom: 20px;
+        font-size: 18px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+      
+      .footer-section h3::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #d9534f;
+      }
+      
+      .footer-links {
+        list-style: none;
+      }
+      
+      .footer-links li {
+        margin-bottom: 10px;
+      }
+      
+      .footer-links a {
+        color: #ddd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      .footer-links a:hover {
+        color: #d9534f;
+      }
+      
+      .social-links {
+        display: flex;
+        gap: 15px;
+        margin-top: 15px;
+      }
+      
+      .social-icon {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        background-color: #444;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+      }
+      
+      .social-icon:hover {
+        background-color: #d9534f;
+      }
+      
+      .copyright {
+        text-align: center;
+        padding-top: 20px;
+        border-top: 1px solid #444;
+        font-size: 14px;
+        color: #aaa;
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 768px) {
+        header .container {
+          padding: 15px 20px;
+        }
+        
+        .hamburger {
+          display: block;
+        }
+        
+        nav {
+          position: absolute;
+          top: 80px;
+          left: 0;
+          width: 100%;
+          background-color: #ffeaea;
+          box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-links {
+          position: static;
+          flex-direction: column;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+          padding: 0;
+          gap: 0;
+          align-items: flex-start;
+        }
+        
+        .nav-links.active {
+          max-height: 500px;
+        }
+        
+        .nav-links li {
+          width: 100%;
+        }
+        
+        .nav-links a, .dropdown-btn {
+          display: block;
+          width: 100%;
+          padding: 15px 20px;
+          margin: 0;
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .dropdown {
+          width: 100%;
+        }
+        
+        .dropdown-content {
+          position: static;
+          box-shadow: none;
+          width: 100%;
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+          padding-left: 20px;
+        }
+        
+        .dropdown-content.show {
+          max-height: 300px;
+        }
+        
+        .dropdown-content a {
+          padding: 10px 20px;
+          background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .overlay-text {
+          font-size: 18px;
+          padding: 20px;
+        }
+        
+        .hero {
+          height: 400px;
+        }
+        
+        .news h2, .realtime-news h2 {
+          font-size: 28px;
+        }
+        
+        .info-grid, .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .realtime-badge {
+          top: 10px;
+          right: 10px;
+          font-size: 12px;
+          padding: 3px 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-container">
+        <div class="logo-title">
+          <img src="dp.png" alt="E-Response Logo" class="logo" />
+          <h1 class="site-title">E-Response</h1>
+        </div>
+        <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+        <nav>
+          <ul class="nav-links" id="nav-menu">
+            <li><a href="homepage.html">Home</a></li>
+            <li class="dropdown">
+              <button class="dropdown-btn" id="menu-dropdown-btn">Menu</button>
+              <div class="dropdown-content" id="menu-dropdown">
+                <a href="preparedness.html">Preparedness</a>
+                <a href="emergency_contacts.html">Emergency Contacts</a>
+                <a href="guides.html">Guides and Tutorials</a>
+                <a href="#" class="logout-btn">Log Out</a>
+              </div>
+            </li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="profile.html">Profile</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="overlay-text">
+        <p>
+          Earthquakes often damage critical infrastructure such as roads, bridges, hospitals, and power lines, severely hampering rescue operations and emergency response. E-Response helps communities prepare and respond effectively.
+        </p>
+      </div>
+    </section>
+
+    <!-- Real-time News Section -->
+    <section class="realtime-news">
+      <div class="container">
+        <h2>Real-time Earthquake News</h2>
+        <div class="realtime-badge">LIVE UPDATES</div>
+        <div class="card-grid" id="realtime-news-container">
+          <div class="loading-spinner">
+            <div class="spinner"></div>
+          </div>
+        </div>
+        <button class="refresh-button" id="refresh-news">Refresh News</button>
+      </div>
+    </section>
+
+    <section class="news">
+      <div class="container">
+        <h2>Recent Earthquake News</h2>
+        <div class="card-grid">
+          <div class="card">
+            <img src="images/Myanmar_Earthquake_41717.webp" alt="Aftermath of the Japan tsunami showing flooded streets and damaged buildings" />
+            <div class="card-content">
+              <h3>Japan Tsunami</h3>
+              <p>A powerful earthquake triggered a devastating tsunami that hit Japan's eastern coast, causing widespread damage and displacement.</p>
+              <a href="#" class="card-link">Read More</a>
             </div>
-          </li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="profile.html">Profile</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero">
-    <div class="overlay-text">
-      <p>
-        Earthquakes often damage critical infrastructure such as roads, bridges, hospitals, and power lines, severely hampering rescue operations and emergency response. E-Response helps communities prepare and respond effectively.
-      </p>
-    </div>
-  </section>
-
-  <section class="news">
-    <div class="container">
-      <h2>Recent Earthquake News</h2>
-      <div class="card-grid">
-        <div class="card">
-          <img src="images/Myanmar_Earthquake_41717.webp" alt="Aftermath of the Japan tsunami showing flooded streets and damaged buildings" />
-          <div class="card-content">
-            <h3>Japan Tsunami</h3>
-            <p>A powerful earthquake triggered a devastating tsunami that hit Japan's eastern coast, causing widespread damage and displacement.</p>
-            <a href="#" class="card-link">Read More</a>
           </div>
-        </div>
-        <div class="card">
-          <img src="images/Myanmar_Earthquake_41717.webp" alt="Rescue workers searching through rubble after the Turkey earthquake" />
-          <div class="card-content">
-            <h3>Turkey Earthquake 2023</h3>
-            <p>The 7.8 magnitude earthquake that struck Turkey caused massive destruction across multiple cities and affected millions of people.</p>
-            <a href="#" class="card-link">Read More</a>
+          <div class="card">
+            <img src="images/Myanmar_Earthquake_41717.webp" alt="Rescue workers searching through rubble after the Turkey earthquake" />
+            <div class="card-content">
+              <h3>Turkey Earthquake 2023</h3>
+              <p>The 7.8 magnitude earthquake that struck Turkey caused massive destruction across multiple cities and affected millions of people.</p>
+              <a href="#" class="card-link">Read More</a>
+            </div>
           </div>
-        </div>
-        <div class="card">
-          <img src="images/Myanmar_Earthquake_41717.webp" alt="Structural damage to buildings after the Thailand earthquake" />
-          <div class="card-content">
-            <h3>Thailand Earthquake 2025</h3>
-            <p>A 6.4 magnitude earthquake hit northern Thailand, damaging infrastructure and affecting local communities across the region.</p>
-            <a href="#" class="card-link">Read More</a>
+          <div class="card">
+            <img src="images/Myanmar_Earthquake_41717.webp" alt="Structural damage to buildings after the Thailand earthquake" />
+            <div class="card-content">
+              <h3>Thailand Earthquake 2025</h3>
+              <p>A 6.4 magnitude earthquake hit northern Thailand, damaging infrastructure and affecting local communities across the region.</p>
+              <a href="#" class="card-link">Read More</a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="info-section">
-    <div class="container">
-      <div class="info-grid">
-        <div class="info-item">
-          <div class="info-icon">🏠</div>
-          <h3>Prepare Your Home</h3>
-          <p>Learn how to secure furniture, prepare emergency kits, and make your home safer during earthquakes.</p>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">🚨</div>
-          <h3>Emergency Response</h3>
-          <p>Know what to do during and immediately after an earthquake to protect yourself and your loved ones.</p>
-        </div>
-        <div class="info-item">
-          <div class="info-icon">📱</div>
-          <h3>Alert Systems</h3>
-          <p>Stay informed with early warning systems and emergency notifications for earthquake-prone areas.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="footer-container">
-        <div class="footer-section">
-          <h3>E-Response</h3>
-          <p>Dedicated to earthquake preparedness, response, and community resilience since 2020.</p>
-          <div class="social-links">
-            <a href="#" class="social-icon">f</a>
-            <a href="#" class="social-icon">t</a>
-            <a href="#" class="social-icon">in</a>
+    <section class="info-section">
+      <div class="container">
+        <div class="info-grid">
+          <div class="info-item">
+            <div class="info-icon">🏠</div>
+            <h3>Prepare Your Home</h3>
+            <p>Learn how to secure furniture, prepare emergency kits, and make your home safer during earthquakes.</p>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">🚨</div>
+            <h3>Emergency Response</h3>
+            <p>Know what to do during and immediately after an earthquake to protect yourself and your loved ones.</p>
+          </div>
+          <div class="info-item">
+            <div class="info-icon">📱</div>
+            <h3>Alert Systems</h3>
+            <p>Stay informed with early warning systems and emergency notifications for earthquake-prone areas.</p>
           </div>
         </div>
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul class="footer-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Emergency Resources</a></li>
-            <li><a href="#">Preparedness</a></li>
-            <li><a href="#">About Us</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Resources</h3>
-          <ul class="footer-links">
-            <li><a href="#">Emergency Contacts</a></li>
-            <li><a href="#">Preparedness Guides</a></li>
-            <li><a href="#">Educational Materials</a></li>
-            <li><a href="#">Community Training</a></li>
-          </ul>
-        </div>
-        <div class="footer-section">
-          <h3>Contact Us</h3>
-          <ul class="footer-links">
-            <li>Email: info@e-response.org</li>
-            <li>Phone: +1 (555) 123-4567</li>
-            <li>Address: 123 Emergency Ave, Safety City</li>
-          </ul>
-        </div>
       </div>
-      <div class="copyright">
-        <p>&copy; 2025 E-Response. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
+    </section>
 
-  <script>
-    // Mobile menu toggle
-    document.getElementById('menu-toggle').addEventListener('click', function() {
-      document.getElementById('nav-menu').classList.toggle('active');
-    });
+    <footer>
+      <div class="container">
+        <div class="footer-container">
+          <div class="footer-section">
+            <h3>E-Response</h3>
+            <p>Dedicated to earthquake preparedness, response, and community resilience since 2020.</p>
+            <div class="social-links">
+              <a href="#" class="social-icon">f</a>
+              <a href="#" class="social-icon">t</a>
+              <a href="#" class="social-icon">in</a>
+            </div>
+          </div>
+          <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul class="footer-links">
+              <li><a href="#">Home</a></li>
+              <li><a href="#">Emergency Resources</a></li>
+              <li><a href="#">Preparedness</a></li>
+              <li><a href="#">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Resources</h3>
+            <ul class="footer-links">
+              <li><a href="#">Emergency Contacts</a></li>
+              <li><a href="#">Preparedness Guides</a></li>
+              <li><a href="#">Educational Materials</a></li>
+              <li><a href="#">Community Training</a></li>
+            </ul>
+          </div>
+          <div class="footer-section">
+            <h3>Contact Us</h3>
+            <ul class="footer-links">
+              <li>Email: info@e-response.org</li>
+              <li>Phone: +1 (555) 123-4567</li>
+              <li>Address: 123 Emergency Ave, Safety City</li>
+            </ul>
+          </div>
+        </div>
+        <div class="copyright">
+          <p>&copy; 2025 E-Response. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+ // DOM element references
+const REALTIME_NEWS_CONTAINER = document.getElementById('realtime-news-container');
+const REFRESH_BUTTON = document.getElementById('refresh-news');
+
+// Function to fetch earthquake news
+async function fetchEarthquakeNews() {
+  try {
+    const response = await fetch(
+      'https://newsapi.org/v2/everything?q=earthquake&language=en&sortBy=publishedAt&pageSize=10&apiKey=5565f20a16d04ba98b7edf311c491665'
+    );
     
-    // Mobile dropdown toggle
-    if (window.innerWidth <= 768) {
-      document.getElementById('menu-dropdown-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        document.getElementById('menu-dropdown').classList.toggle('show');
-      });
-    } else {
-      // For desktop, show dropdown on hover
-      document.querySelector('.dropdown').addEventListener('mouseenter', function() {
-        document.getElementById('menu-dropdown').style.display = 'block';
-      });
-      
-      document.querySelector('.dropdown').addEventListener('mouseleave', function() {
-        document.getElementById('menu-dropdown').style.display = 'none';
-      });
+    const data = await response.json();
+    
+    // Check if the API request was successful
+    if (data.status !== 'ok' || !data.articles || data.articles.length === 0) {
+      console.error('API Error:', data);
+      throw new Error('Failed to fetch news articles');
     }
-  </script>
-</body>
-</html>
+    
+    return data.articles;
+  } catch (error) {
+    console.error('Error fetching news:', error);
+    throw error;
+  }
+}
+
+// Function to create a news card element
+function createNewsCard(article) {
+  // Format date
+  const publishedDate = new Date(article.publishedAt);
+  const formattedDate = publishedDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  
+  // Create fallback image URL if article image is null
+  const imageUrl = article.urlToImage || 'images/Myanmar_Earthquake_41717.webp';
+  
+  // Create card HTML
+  const cardHTML = `
+    <div class="card">
+      <img src="${imageUrl}" alt="${article.title}" onerror="this.src='images/Myanmar_Earthquake_41717.webp';" />
+      <div class="card-content">
+        <div class="card-meta">
+          <span>Source: ${article.source.name || 'Unknown'}</span>
+          <span>Published: ${formattedDate}</span>
+        </div>
+        <h3>${article.title}</h3>
+        <p>${article.description || 'No description available'}</p>
+        <a href="${article.url}" class="card-link" target="_blank">Read Full Article</a>
+      </div>
+    </div>
+  `;
+  
+  return cardHTML;
+}
+
+// Function to display news in the container
+async function displayNews() {
+  try {
+    // Show loading spinner
+    REALTIME_NEWS_CONTAINER.innerHTML = '<div class="loading-spinner"><div class="spinner"></div></div>';
+    
+    // Fetch news
+    const articles = await fetchEarthquakeNews();
+    
+    // Clear loading spinner
+    REALTIME_NEWS_CONTAINER.innerHTML = '';
+    
+    // Display news cards
+    if (articles && articles.length > 0) {
+      const displayCount = Math.min(3, articles.length);
+      
+      for (let i = 0; i < displayCount; i++) {
+        const cardHTML = createNewsCard(articles[i]);
+        REALTIME_NEWS_CONTAINER.innerHTML += cardHTML;
+      }
+    } else {
+      // Fallback content if no news available
+      REALTIME_NEWS_CONTAINER.innerHTML = `
+        <div class="error-message">
+          <h3>No earthquake news found</h3>
+          <p>Please try again later or check your connection.</p>
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error('Error displaying news:', error);
+    // Display error message
+    REALTIME_NEWS_CONTAINER.innerHTML = `
+      <div class="error-message">
+        <h3>Unable to load news</h3>
+        <p>Please try again later or check your connection.</p>
+      </div>
+    `;
+  }
+}
+
+// Load news when page loads
+document.addEventListener('DOMContentLoaded', displayNews);
+
+// Refresh news when button is clicked
+REFRESH_BUTTON.addEventListener('click', function() {
+  displayNews();
+  
+  // Add animation to the button
+  this.classList.add('refreshing');
+  setTimeout(() => {
+    this.classList.remove('refreshing');
+  }, 1000);
+});
+
+// Refresh news every 5 minutes (300000 milliseconds)
+setInterval(displayNews, 300000);
+    </script>
+  </body>
+  </html>
