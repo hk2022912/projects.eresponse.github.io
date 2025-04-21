@@ -688,67 +688,126 @@
   </script>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const synth = window.speechSynthesis;
 
-    document.querySelectorAll('.modal').forEach((modal, index) => {
-      // Create buttons
-      const playBtn = document.createElement('button');
-      const stopBtn = document.createElement('button');
-      playBtn.textContent = '▶️ Play';
-      stopBtn.textContent = '⏹️ Stop';
-
-      // Style buttons (optional)
-      playBtn.style.marginRight = '10px';
-      playBtn.style.padding = stopBtn.style.padding = '8px 16px';
-      playBtn.style.background = '#2ecc71';
-      stopBtn.style.background = '#e74c3c';
-      playBtn.style.color = stopBtn.style.color = 'white';
-      playBtn.style.border = stopBtn.style.border = 'none';
-      playBtn.style.borderRadius = stopBtn.style.borderRadius = '6px';
-      playBtn.style.cursor = stopBtn.style.cursor = 'pointer';
-      playBtn.style.marginTop = stopBtn.style.marginTop = '20px';
-
-      // Append buttons
-      modal.appendChild(playBtn);
-      modal.appendChild(stopBtn);
-
-      // Function to extract and read text
-      function speakModalContent() {
-        let textToRead = '';
-
-        const headers = modal.querySelectorAll('.modal-content h4');
-        const lists = modal.querySelectorAll('.modal-content ul');
-
-        headers.forEach((header, i) => {
-          textToRead += header.textContent + '. ';
-          if (lists[i]) {
-            const items = lists[i].querySelectorAll('li');
-            items.forEach((item) => {
-              textToRead += item.textContent + '. ';
-            });
-          }
-        });
-
-        const utterance = new SpeechSynthesisUtterance(textToRead);
-        utterance.rate = 1;
-        synth.speak(utterance);
+document.addEventListener("DOMContentLoaded", function () {
+  const synth = window.speechSynthesis;
+  
+  document.querySelectorAll('.modal').forEach((modal, index) => {
+    // Create container for buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'speech-controls';
+    buttonContainer.style.display = 'flex';
+    buttonContainer.style.gap = '10px';
+    buttonContainer.style.marginTop = '20px';
+    
+    // Create buttons
+    const playBtn = document.createElement('button');
+    const stopBtn = document.createElement('button');
+    
+    // Use text instead of emojis
+    playBtn.innerHTML = '<span class="icon">▷ </span> Play';
+    stopBtn.innerHTML = '<span class="icon">◻️</span> Stop';
+    
+    // Apply styles to buttons
+    [playBtn, stopBtn].forEach(btn => {
+      btn.style.display = 'flex';
+      btn.style.alignItems = 'center';
+      btn.style.justifyContent = 'center';
+      btn.style.padding = '8px 16px';
+      btn.style.border = 'none';
+      btn.style.borderRadius = '6px';
+      btn.style.cursor = 'pointer';
+      btn.style.fontFamily = 'Arial, sans-serif';
+      btn.style.fontWeight = 'bold';
+      btn.style.transition = 'all 0.2s ease';
+      btn.style.minWidth = '100px';
+    });
+    
+    // Individual button styles
+    playBtn.style.backgroundColor = '#4CAF50';
+    playBtn.style.color = 'white';
+    stopBtn.style.backgroundColor = '#f44336';
+    stopBtn.style.color = 'white';
+    
+    // Hover effects
+    playBtn.onmouseover = function() { this.style.opacity = '0.9'; };
+    playBtn.onmouseout = function() { this.style.opacity = '1'; };
+    stopBtn.onmouseover = function() { this.style.opacity = '0.9'; };
+    stopBtn.onmouseout = function() { this.style.opacity = '1'; };
+    
+    // Style for the icons
+    const icons = playBtn.querySelector('.icon'), stopIcon = stopBtn.querySelector('.icon');
+    [icons, stopIcon].forEach(icon => {
+      if (icon) {
+        icon.style.fontWeight = 'bold';
+        icon.style.marginRight = '6px';
+        icon.style.fontSize = '12px';
       }
-
-      // Events
-      playBtn.addEventListener('click', () => {
-        if (!synth.speaking) {
-          speakModalContent();
+    });
+    
+    // Add buttons to container
+    buttonContainer.appendChild(playBtn);
+    buttonContainer.appendChild(stopBtn);
+    
+    // Add container to modal
+    modal.appendChild(buttonContainer);
+    
+    // Function to extract and read text
+    function speakModalContent() {
+      let textToRead = '';
+      
+      const headers = modal.querySelectorAll('.modal-content h4');
+      const lists = modal.querySelectorAll('.modal-content ul');
+      
+      headers.forEach((header, i) => {
+        textToRead += header.textContent + '. ';
+        if (lists[i]) {
+          const items = lists[i].querySelectorAll('li');
+          items.forEach((item) => {
+            textToRead += item.textContent + '. ';
+          });
         }
       });
-
-      stopBtn.addEventListener('click', () => {
-        if (synth.speaking) {
-          synth.cancel();
-        }
-      });
+      
+      const utterance = new SpeechSynthesisUtterance(textToRead);
+      utterance.rate = 1;
+      
+      // Visual feedback when speaking
+      playBtn.style.backgroundColor = '#2E7D32';
+      playBtn.disabled = true;
+      playBtn.style.cursor = 'not-allowed';
+      playBtn.innerHTML = '<span class="icon">►</span> Playing...';
+      
+      // Reset button when done
+      utterance.onend = function() {
+        playBtn.style.backgroundColor = '#4CAF50';
+        playBtn.disabled = false;
+        playBtn.style.cursor = 'pointer';
+        playBtn.innerHTML = '<span class="icon">►</span> Play';
+      };
+      
+      synth.speak(utterance);
+    }
+    
+    // Event listeners
+    playBtn.addEventListener('click', () => {
+      if (!synth.speaking) {
+        speakModalContent();
+      }
+    });
+    
+    stopBtn.addEventListener('click', () => {
+      if (synth.speaking) {
+        synth.cancel();
+        playBtn.style.backgroundColor = '#4CAF50';
+        playBtn.disabled = false;
+        playBtn.style.cursor = 'pointer';
+        playBtn.innerHTML = '<span class="icon">►</span> Play';
+      }
     });
   });
+});
+
 </script>
 
 </body>
