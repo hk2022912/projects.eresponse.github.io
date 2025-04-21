@@ -686,5 +686,70 @@
       }
     });
   </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const synth = window.speechSynthesis;
+
+    document.querySelectorAll('.modal').forEach((modal, index) => {
+      // Create buttons
+      const playBtn = document.createElement('button');
+      const stopBtn = document.createElement('button');
+      playBtn.textContent = '▶️ Play';
+      stopBtn.textContent = '⏹️ Stop';
+
+      // Style buttons (optional)
+      playBtn.style.marginRight = '10px';
+      playBtn.style.padding = stopBtn.style.padding = '8px 16px';
+      playBtn.style.background = '#2ecc71';
+      stopBtn.style.background = '#e74c3c';
+      playBtn.style.color = stopBtn.style.color = 'white';
+      playBtn.style.border = stopBtn.style.border = 'none';
+      playBtn.style.borderRadius = stopBtn.style.borderRadius = '6px';
+      playBtn.style.cursor = stopBtn.style.cursor = 'pointer';
+      playBtn.style.marginTop = stopBtn.style.marginTop = '20px';
+
+      // Append buttons
+      modal.appendChild(playBtn);
+      modal.appendChild(stopBtn);
+
+      // Function to extract and read text
+      function speakModalContent() {
+        let textToRead = '';
+
+        const headers = modal.querySelectorAll('.modal-content h4');
+        const lists = modal.querySelectorAll('.modal-content ul');
+
+        headers.forEach((header, i) => {
+          textToRead += header.textContent + '. ';
+          if (lists[i]) {
+            const items = lists[i].querySelectorAll('li');
+            items.forEach((item) => {
+              textToRead += item.textContent + '. ';
+            });
+          }
+        });
+
+        const utterance = new SpeechSynthesisUtterance(textToRead);
+        utterance.rate = 1;
+        synth.speak(utterance);
+      }
+
+      // Events
+      playBtn.addEventListener('click', () => {
+        if (!synth.speaking) {
+          speakModalContent();
+        }
+      });
+
+      stopBtn.addEventListener('click', () => {
+        if (synth.speaking) {
+          synth.cancel();
+        }
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
