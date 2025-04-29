@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>E-Response - Earthquake Emergency Response</title>
+  <link rel="stylesheet" href="test.css">
+</head>
+<body>
+  <header>
+    <div class="container header-container">
+      <div class="logo-title">
+        <img src="dp.png" alt="E-Response Logo" class="logo" />
+        <h1 class="site-title">E-Response</h1>
+      </div>
+      <button class="hamburger" id="menu-toggle" aria-label="Toggle navigation menu">☰</button>
+      <nav id="main-nav">
+        <ul class="nav-links" id="nav-menu">
+          <li><a href="homepage.html" class="active">Home</a></li>
+          <li class="dropdown">
+            <button class="dropdown-btn" id="menu-dropdown-btn">Menu</button>
+            <div class="dropdown-content" id="menu-dropdown">
+              <a href="preparedness.html">Preparedness</a>
+              <a href="emergency_contacts.html">Emergency Contacts</a>
+              <a href="guides.html">Guides and Tutorials</a>
+              <a href="#" class="logout-btn">Log Out</a>
+            </div>
+          </li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="overlay-text">
+      <p>
+        Earthquakes often damage critical infrastructure such as roads, bridges, hospitals, and power lines, severely hampering rescue operations and emergency response. E-Response helps communities prepare and respond effectively.
+      </p>
+    </div>
+  </section>
+
+  <section class="news">
+    <div class="container">
+      <h2>Recent Earthquake News</h2>
+      <button class="fetch-btn" onclick="fetchEarthquakeNews()">Show Latest Earthquakes</button>
+      <div id="newsContainer" class="card-grid"></div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div class="container">
+      <h2>Emergency Information</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <div class="info-icon">🏠</div>
+          <h3>Prepare Your Home</h3>
+          <p>Learn how to secure furniture, prepare emergency kits, and make your home safer during earthquakes.</p>
+          <a href="preparedness.html" class="info-link">Learn More</a>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🚨</div>
+          <h3>Emergency Response</h3>
+          <p>Know what to do during and immediately after an earthquake to protect yourself and your loved ones.</p>
+          <a href="emergency.html" class="info-link">Learn More</a>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📱</div>
+          <h3>Alert Systems</h3>
+          <p>Stay informed with early warning systems and emergency notifications for earthquake-prone areas.</p>
+          <a href="alerts.html" class="info-link">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>E-Response</h3>
+          <p>Dedicated to earthquake preparedness, response, and community resilience since 2020.</p>
+          <div class="social-links">
+            <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Emergency Resources</a></li>
+            <li><a href="#">Preparedness</a></li>
+            <li><a href="#">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Resources</h3>
+          <ul class="footer-links">
+            <li><a href="#">Emergency Contacts</a></li>
+            <li><a href="#">Preparedness Guides</a></li>
+            <li><a href="#">Educational Materials</a></li>
+            <li><a href="#">Community Training</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <ul class="footer-links contact-info">
+            <li><i class="fas fa-envelope"></i> info@e-response.org</li>
+            <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+            <li><i class="fas fa-map-marker-alt"></i> 123 Emergency Ave, Safety City</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 E-Response. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

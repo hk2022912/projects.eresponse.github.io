@@ -1,0 +1,623 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* General Styles */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fdf2f2;
+  color: #333;
+  line-height: 1.6;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Header */
+header {
+  background-color: #ffeaea;
+  padding: 15px 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-title {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.site-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #c9302c;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.nav-links a:hover {
+  color: #c9302c;
+  background-color: rgba(201, 48, 44, 0.1);
+}
+
+/* Dropdown Menu */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dropdown-btn:hover {
+  color: #c9302c;
+  background-color: rgba(201, 48, 44, 0.1);
+}
+
+.dropdown-btn::after {
+  content: '▼';
+  font-size: 10px;
+  margin-left: 5px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 200px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  border-radius: 4px;
+  z-index: 10;
+  top: 100%;
+  left: 0;
+}
+
+.dropdown-content a {
+  color: #444;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+  color: #c9302c;
+}
+
+.dropdown-content .logout-btn {
+  color: #c9302c;
+  font-weight: 500;
+  border-top: 1px solid #eee;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Mobile Styles for Dropdown */
+.hamburger {
+  display: none;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 24px;
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  height: 500px;
+  background-color: #333; /* Fallback */
+  background-image: url('images/earthquake.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1;
+}
+
+.overlay-text {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+  font-size: 22px;
+  max-width: 800px;
+  text-align: center;
+  padding: 30px 40px;
+  background: rgba(201, 48, 44, 0.7);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* News Section */
+.news {
+  background-color: #d9534f;
+  color: #fff;
+  padding: 60px 0;
+  margin-bottom: 30px;
+}
+
+.news h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 32px;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.news h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background-color: #fff;
+  border-radius: 2px;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background-color: #fff;
+  color: #333;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #c9302c;
+}
+
+.card p {
+  margin-bottom: 15px;
+  color: #555;
+  flex-grow: 1;
+}
+
+.card-meta {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-link {
+  display: inline-block;
+  padding: 8px 20px;
+  background-color: #d9534f;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  align-self: flex-start;
+  margin-top: auto;
+}
+
+.card-link:hover {
+  background-color: #c9302c;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  gap: 20px;
+  color: #fff;
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #fff;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Refresh button */
+.refresh-button {
+  background-color: #fff;
+  color: #c9302c;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  margin: 30px auto 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.refresh-button:hover {
+  background-color: #f8f8f8;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.refresh-button::before {
+  content: '↻';
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.refresh-button:active {
+  transform: translateY(1px);
+}
+
+/* Information Section */
+.info-section {
+  padding: 60px 0;
+  background-color: #f8f8f8;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.info-item {
+  background-color: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-5px);
+}
+
+.info-icon {
+  font-size: 36px;
+  color: #d9534f;
+  margin-bottom: 15px;
+}
+
+.info-item h3 {
+  margin-bottom: 15px;
+  color: #333;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 40px 0 20px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-bottom: 20px;
+}
+
+.footer-section h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.footer-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #d9534f;
+}
+
+.footer-links {
+  list-style: none;
+}
+
+.footer-links li {
+  margin-bottom: 10px;
+}
+
+.footer-links a {
+  color: #ddd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #d9534f;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.social-icon {
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  background-color: #444;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #d9534f;
+}
+
+.copyright {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #444;
+  font-size: 14px;
+  color: #aaa;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  header .container {
+    padding: 15px 20px;
+  }
+  
+  .hamburger {
+    display: block;
+  }
+  
+  nav {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    background-color: #ffeaea;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  }
+  
+  .nav-links {
+    position: static;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding: 0;
+    gap: 0;
+    align-items: flex-start;
+  }
+  
+  .nav-links.active {
+    max-height: 500px;
+  }
+  
+  .nav-links li {
+    width: 100%;
+  }
+  
+  .nav-links a, .dropdown-btn {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    margin: 0;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  
+  .dropdown {
+    width: 100%;
+  }
+  
+  .dropdown-content {
+    position: static;
+    box-shadow: none;
+    width: 100%;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    padding-left: 20px;
+  }
+  
+  .dropdown-content.show {
+    max-height: 300px;
+  }
+  
+  .dropdown-content a {
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .overlay-text {
+    font-size: 18px;
+    padding: 20px;
+  }
+  
+  .hero {
+    height: 400px;
+  }
+  
+  .news h2 {
+    font-size: 28px;
+  }
+  
+  .info-grid, .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* JavaScript toggle classes support */
+.nav-links.show {
+  display: flex;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+/* Earthquake cards styling */
+.earthquake-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.earthquake-card h3 {
+  color: #c9302c;
+  margin-bottom: 10px;
+}
+
+.earthquake-details span {
+  font-weight: bold;
+}
+
+.earthquake-magnitude {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.magnitude-low {
+  background-color: #5cb85c;
+}
+
+.magnitude-medium {
+  background-color: #f0ad4e;
+}
+
+.magnitude-high {
+  background-color: #d9534f;
+}
+
+.magnitude-severe {
+  background-color: #9c27b0;
+}
+
+.earthquake-time {
+  color: #777;
+  font-size: 0.9em;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #c9302c;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 80%;
+}

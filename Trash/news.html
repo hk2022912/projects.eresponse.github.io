@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Earthquake News</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #d32f2f;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #d32f2f;
+      padding-bottom: 10px;
+    }
+    
+    button {
+      background-color: #d32f2f;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      display: block;
+      margin: 0 auto 30px;
+      transition: background-color 0.3s;
+    }
+    
+    button:hover {
+      background-color: #b71c1c;
+    }
+    
+    #newsContainer {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    
+    .news-item {
+      border: 1px solid #ddd;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .news-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .news-item h3 {
+      margin: 0 0 15px 0;
+      color: #d32f2f;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+    
+    .news-item p {
+      margin: 10px 0;
+    }
+    
+    .news-item a {
+      text-decoration: none;
+      color: #1976d2;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.3s;
+    }
+    
+    .news-item a:hover {
+      border-bottom-color: #1976d2;
+    }
+    
+    .magnitude {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .high {
+      background-color: #d32f2f;
+    }
+    
+    .medium {
+      background-color: #ff9800;
+    }
+    
+    .low {
+      background-color: #4caf50;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+    }
+    
+    @media (max-width: 768px) {
+      #newsContainer {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Latest Earthquake News</h1>
+  <button onclick="fetchEarthquakeNews()">Show Latest Earthquakes</button>
+  <div id="newsContainer"></div>
+
+  <script>
+    async function fetchEarthquakeNews() {
+      const newsContainer = document.getElementById('newsContainer');
+      newsContainer.innerHTML = "<div class='loading'>Loading earthquake data...</div>";
+      
+      const endpoint = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_week.geojson";
+  
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        newsContainer.innerHTML = "";
+        
+        if (data.features.length === 0) {
+          newsContainer.innerHTML = "<div class='loading'>No significant earthquakes reported this week.</div>";
+          return;
+        }
+  
+        data.features.forEach(eq => {
+          const magnitude = eq.properties.mag;
+          let magnitudeClass = 'low';
+          
+          if (magnitude >= 6.0) {
+            magnitudeClass = 'high';
+          } else if (magnitude >= 5.0) {
+            magnitudeClass = 'medium';
+          }
+          
+          const date = new Date(eq.properties.time);
+          const formattedDate = date.toLocaleString();
+          
+          const item = document.createElement('div');
+          item.className = 'news-item';
+          item.innerHTML = `
+            <h3>${eq.properties.title}</h3>
+            <p><strong>Magnitude:</strong> <span class="magnitude ${magnitudeClass}">${magnitude}</span></p>
+            <p><strong>Location:</strong> ${eq.properties.place}</p>
+            <p><strong>Time:</strong> ${formattedDate}</p>
+            <a href="${eq.properties.url}" target="_blank">View Details</a>
+          `;
+          newsContainer.appendChild(item);
+        });
+      } catch (error) {
+        console.error("Error fetching earthquake data:", error);
+        newsContainer.innerHTML = "<div class='loading'>Failed to load earthquake data. Please try again later.</div>";
+      }
+    }
+  </script>
+</body>
+</html>
