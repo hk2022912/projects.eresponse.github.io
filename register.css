@@ -12,42 +12,59 @@ body {
   color: #333;
   line-height: 1.2;
   min-height: 100vh;
+  font-size: 16px;
 }
 
 /* Header/Navbar */
 .navbar {
-  background: #fdecec;
+  background: linear-gradient(to right, #fdecec, #ffe8e8);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 15px 60px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .logo img {
-  height: 40px;
-  width: 40px;
+  height: 42px;
+  width: 42px;
   object-fit: cover;
   border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(198, 40, 40, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+  transform: scale(1.05);
+}
+
+.logo span {
+  font-size: 1.2rem;
+  color: #b71c1c;
 }
 
 .nav-links {
   display: flex;
+  gap: 20px;
 }
 
 .nav-links a {
   margin: 0 15px;
   text-decoration: none;
-  color: #000;
+  color: #333;
   font-weight: 500;
   position: relative;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
+  padding: 5px 0;
 }
 
 .nav-links a:hover {
@@ -62,7 +79,7 @@ body {
   bottom: -5px;
   left: 0;
   background-color: #c62828;
-  transition: width 0.3s;
+  transition: width 0.3s ease-in-out;
 }
 
 .nav-links a:hover:after {
@@ -72,12 +89,12 @@ body {
 /* Main Layout */
 .container {
   display: flex;
-  min-height: calc(100vh - 70px);
+  min-height: calc(100vh - 72px);
 }
 
 /* Left Panel */
 .left-panel {
-  background: #c62828;
+  background: linear-gradient(135deg, #c62828, #b71c1c);
   color: #fff;
   flex: 1;
   display: flex;
@@ -89,8 +106,10 @@ body {
 }
 
 .left-panel h1 {
-  font-size: 32px;
+  font-size: 2.5rem;
   margin-bottom: 30px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
 }
 
 .illustration {
@@ -99,20 +118,27 @@ body {
   border-radius: 50%;
   background: #fff3e0;
   padding: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 35px;
   object-fit: contain;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transition: transform 0.5s ease;
+}
+
+.illustration:hover {
+  transform: scale(1.03);
 }
 
 .left-panel p {
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 400px;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  max-width: 420px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Right Panel */
 .right-panel {
   flex: 1;
-  background: #f7dada;
+  background: linear-gradient(45deg, #f7dada, #fff0f0);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -125,22 +151,29 @@ body {
   width: 100%;
   background: #fff;
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
   padding: 2.5rem;
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.6s ease-in-out;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.registration-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
 }
 
 /* Registration Form */
 .registration-title {
   color: #c62828;
-  font-size: 1.8rem;
+  font-size: 2rem;
   margin-bottom: 0.5rem;
   text-align: center;
+  font-weight: 600;
 }
 
 .registration-subtitle {
   color: #666;
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -155,23 +188,31 @@ label {
   font-weight: 500;
   margin-bottom: 8px;
   color: #444;
+  font-size: 0.95rem;
 }
 
 input[type="email"],
 input[type="password"],
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
   width: 100%;
-  padding: 14px;
+  padding: 14px 16px;
   border: 1px solid #ddd;
   border-radius: 10px;
   font-size: 15px;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
 }
 
 input:focus {
   outline: none;
   border-color: #c62828;
-  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.2);
+  box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.15);
+  background-color: #fff;
+}
+
+input::placeholder {
+  color: #aaa;
 }
 
 /* Password Group Styling */
@@ -185,7 +226,7 @@ input:focus {
   top: 45px;
   cursor: pointer;
   color: #777;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
 
 .password-group i:hover {
@@ -203,41 +244,49 @@ input:focus {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(198, 40, 40, 0.2);
+  letter-spacing: 0.5px;
 }
 
 .register-btn:hover {
   background-color: #b71c1c;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(198, 40, 40, 0.25);
 }
 
 .register-btn:active {
   transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(198, 40, 40, 0.2);
 }
 
 /* Login Link */
 .login-text {
   text-align: center;
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
   font-size: 0.95rem;
+  color: #555;
 }
 
 .login-text a {
   color: #c62828;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.2s;
+  transition: color 0.2s ease;
+  padding-bottom: 2px;
+  border-bottom: 1px solid transparent;
 }
 
 .login-text a:hover {
   color: #b71c1c;
-  text-decoration: underline;
+  border-bottom: 1px solid #b71c1c;
 }
 
 /* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(15px);
   }
   to {
     opacity: 1;
@@ -258,15 +307,21 @@ input:focus {
   }
   
   .left-panel {
-    padding: 40px 20px;
+    padding: 50px 20px;
   }
   
   .right-panel {
-    padding: 40px 20px;
+    padding: 50px 20px;
   }
   
   .registration-container {
-    max-width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .illustration {
+    width: 200px;
+    height: 200px;
   }
 }
 
@@ -279,30 +334,59 @@ input:focus {
   
   .nav-links {
     width: 100%;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 15px;
   }
   
   .nav-links a {
-    margin: 0 10px;
-    font-size: 14px;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  .left-panel h1 {
+    font-size: 2rem;
+  }
+  
+  .left-panel p {
+    font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
   .illustration {
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 25px;
   }
   
   .registration-title {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
   }
   
   .registration-subtitle {
     font-size: 0.9rem;
+    margin-bottom: 1.5rem;
   }
   
   .registration-container {
     padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  input[type="email"],
+  input[type="password"],
+  input[type="text"],
+  input[type="number"] {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  
+  .register-btn {
+    padding: 12px;
+    font-size: 0.95rem;
   }
 }
