@@ -691,7 +691,7 @@
       // Logout functionality from dropdown
       const logoutBtn = document.querySelector('.logout-btn');
       if (logoutBtn) {
-        logoutBtn.addEventListener('click', function(e) {
+        logoutBtn.addEventLisDener('click', function(e) {
           localStorage.removeItem('user_data');
           window.location.href = 'login.html';
         });

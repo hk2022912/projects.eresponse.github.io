@@ -810,5 +810,42 @@ document.addEventListener("DOMContentLoaded", function () {
 
 </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const logoutButton = document.querySelector('.logout-btn');
+
+    // Handle logout
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        // Update login state
+        localStorage.setItem('isLoggedIn', 'false');
+        // Broadcast logout event
+        localStorage.setItem('logout-event', Date.now());
+        // Redirect to login
+        window.location.href = 'login.html';
+      });
+    }
+
+    // Listen for storage events (login/logout across tabs)
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event') {
+        // Another tab logged out
+        window.location.href = 'login.html';
+      }
+      if (event.key === 'login-event') {
+        // Another tab logged in
+        window.location.reload(); // Reload current tab to reflect login
+      }
+    });
+
+    // Redirect if not logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn !== 'true' && !window.location.href.includes('login.html')) {
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+
 </body>
 </html>

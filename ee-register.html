@@ -78,7 +78,7 @@
       </div>
     </div>
   </main>
-
+  
   <script>
     document.getElementById('toggle-password').addEventListener('click', function () {
       const password = document.getElementById('password');
@@ -125,7 +125,7 @@
         if (response.ok) {
           alert('Registration successful!');
           localStorage.setItem('user_data', JSON.stringify(data.user_data));
-          window.location.href = 'profile.html';
+          window.location.href = 'homepage.html';
         } else {
           alert('Registration failed: ' + data.message);
         }

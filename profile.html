@@ -3,12 +3,439 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>E-Response - User Profile</title>
-  <link rel="stylesheet" href="profile.css">
+  <title>E-Response - Profile</title>
+  <style>
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* General Styles */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fdf2f2;
+      color: #333;
+      line-height: 1.6;
+    }
+    
+    /* Container */
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    /* Header */
+    header {
+      background-color: #ffeaea;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo-title {
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    
+    .site-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #c9302c;
+    }
+    
+    .nav-links {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+    
+    .nav-links a:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+    
+    /* Dropdown Menu */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-btn {
+      text-decoration: none;
+      color: #444;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .dropdown-btn:hover {
+      color: #c9302c;
+      background-color: rgba(201, 48, 44, 0.1);
+    }
+    
+    .dropdown-btn::after {
+      content: '▼';
+      font-size: 10px;
+      margin-left: 5px;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      min-width: 200px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 4px;
+      z-index: 10;
+      top: 100%;
+      left: 0;
+    }
+    
+    .dropdown-content a {
+      color: #444;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s ease;
+    }
+    
+    .dropdown-content a:hover {
+      background-color: #f1f1f1;
+      color: #c9302c;
+    }
+    
+    .dropdown-content .logout-btn {
+      color: #c9302c;
+      font-weight: 500;
+      border-top: 1px solid #eee;
+    }
+    
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+    /* Mobile Styles for Dropdown */
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 24px;
+    }
+    
+    /* Profile Container */
+    .profile-container {
+      background-color: white;
+      padding: 25px;
+      max-width: 600px;
+      margin: 30px auto;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+    
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .profile-header h2 {
+      color: #c9302c;
+      font-size: 24px;
+    }
+    
+    /* Profile image styles */
+    .profile-image-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #ffeaea;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      margin-bottom: 15px;
+    }
+    
+    .image-upload {
+      display: none;
+    }
+    
+    .change-image-btn {
+      background-color: #c9302c;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    
+    .change-image-btn:hover {
+      background-color: #a82723;
+    }
+    
+    .edit-btn {
+      background-color: #c9302c;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .edit-btn:hover {
+      background-color: #a82723;
+    }
+    
+    .save-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    
+    .save-btn:hover {
+      background-color: #218838;
+    }
+    
+    .cancel-btn {
+      background-color: #6c757d;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+      margin-left: 10px;
+    }
+    
+    .cancel-btn:hover {
+      background-color: #5a6268;
+    }
+    
+    .button-group {
+      display: none;
+      text-align: center;
+    }
+    
+    .profile-item {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      background-color: #ffeaea;
+      transition: all 0.3s ease;
+    }
+    
+    .profile-item:hover {
+      background-color: #ffe0e0;
+    }
+    
+    .profile-item strong {
+      display: inline-block;
+      width: 140px;
+      color: #c9302c;
+      font-weight: 600;
+    }
+    
+    .profile-item span {
+      color: #444;
+      font-weight: 500;
+    }
+    
+    .profile-item input {
+      width: calc(100% - 150px);
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      display: none;
+    }
+    
+    .profile-item.edit-mode span {
+      display: none;
+    }
+    
+    .profile-item.edit-mode input {
+      display: inline-block;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .header-container {
+        padding: 0 15px;
+      }
+      
+      .hamburger {
+        display: block;
+      }
+      
+      nav {
+        position: absolute;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background-color: #ffeaea;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+      }
+      
+      .nav-links {
+        position: static;
+        flex-direction: column;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding: 0;
+        gap: 0;
+        align-items: flex-start;
+      }
+      
+      .nav-links.active {
+        max-height: 500px;
+      }
+      
+      .nav-links li {
+        width: 100%;
+      }
+      
+      .nav-links a, .dropdown-btn {
+        display: block;
+        width: 100%;
+        padding: 15px 20px;
+        margin: 0;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+      }
+      
+      .dropdown {
+        width: 100%;
+      }
+      
+      .dropdown-content {
+        position: static;
+        box-shadow: none;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        padding-left: 20px;
+      }
+      
+      .dropdown-content.show {
+        max-height: 300px;
+      }
+      
+      .dropdown-content a {
+        padding: 10px 20px;
+        background-color: rgba(255, 255, 255, 0.5);
+      }
+      
+      .profile-container {
+        width: 90%;
+        padding: 15px;
+        margin: 15px auto;
+      }
+      
+      .profile-item {
+        flex-direction: column;
+      }
+      
+      .profile-item strong {
+        display: block;
+        width: 100%;
+        margin-bottom: 5px;
+      }
+      
+      .profile-item input {
+        width: 100%;
+      }
+      
+      .profile-image {
+        width: 120px;
+        height: 120px;
+      }
+      
+      .edit-btn {
+        width: 100%;
+      }
+      
+      .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+      }
+      
+      .button-group.show {
+        display: flex;
+      }
+      
+      .cancel-btn {
+        margin-left: 0;
+        margin-top: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
-
-  <!-- Header - Consistent with Homepage -->
   <header>
     <div class="container header-container">
       <div class="logo-title">
@@ -25,8 +452,7 @@
               <a href="preparedness.html">Preparedness</a>
               <a href="emergency_contacts.html">Emergency Contacts</a>
               <a href="guides.html">Guides and Tutorials</a>
-              <a href="login.html" class="logout-btn">Log Out</a>
-            </div>
+              <a href="login.html" class="logout-btn">Logout</a>
           </li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="profile.html">Profile</a></li>
@@ -35,337 +461,501 @@
     </div>
   </header>
 
-  <!-- Profile Container -->
   <div class="container">
     <div class="profile-container">
+      <div class="profile-header">
+        <h2>User Profile</h2>
+      </div>
       
-      <!-- Medical Info Card -->
-      <div class="profile-left" id="med-info-card">
-        <!-- Profile Image with Change Button -->
-        <div class="profile-image-container">
-          <img src="images/profileicon.jpg" class="profile-image" id="profile-image">
-          <div class="change-photo-btn" onclick="openPhotoModal()">
-            <span>📷</span>
-          </div>
-          <input type="file" id="photo-upload" accept="image/*" onchange="previewImage(event)">
+      <!-- Profile Image Section -->
+      <div class="profile-image-container">
+        <img src="/api/placeholder/150/150" alt="Profile Picture" id="profileImage" class="profile-image">
+        <input type="file" id="imageUpload" class="image-upload" accept="image/*">
+        <button class="change-image-btn" id="changeImageBtn">Change Profile Picture</button>
+      </div>
+      
+      <div class="profile-content" id="profileContent">
+        <div class="profile-item" id="emailItem">
+          <strong>Email:</strong>
+          <span id="emailValue"></span>
+          <input type="email" id="emailInput" />
         </div>
         
-        <h2 class="profile-title">Medical Information</h2>
-        <div class="edit-indicator" id="med-edit-indicator">Editing Mode</div>
+        <div class="profile-item" id="usernameItem">
+          <strong>Username:</strong>
+          <span id="usernameValue"></span>
+          <input type="text" id="usernameInput" />
+        </div>
         
-        <div class="profile-section">
-          <label for="blood">Blood Type</label>
-          <input type="text" id="blood" disabled placeholder="Enter your blood type">
+        <div class="profile-item" id="firstNameItem">
+          <strong>First Name:</strong>
+          <span id="firstNameValue"></span>
+          <input type="text" id="firstNameInput" />
         </div>
-        <div class="profile-section">
-          <label for="weight">Weight (kg)</label>
-          <input type="text" id="weight" disabled placeholder="Enter your weight">
+        
+        <div class="profile-item" id="lastNameItem">
+          <strong>Last Name:</strong>
+          <span id="lastNameValue"></span>
+          <input type="text" id="lastNameInput" />
         </div>
-        <div class="profile-section">
-          <label for="height">Height (cm)</label>
-          <input type="text" id="height" disabled placeholder="Enter your height">
+        
+        <div class="profile-item" id="ageItem">
+          <strong>Age:</strong>
+          <span id="ageValue"></span>
+          <input type="number" id="ageInput" />
         </div>
-        <div class="profile-section">
-          <label for="allergies">Allergies</label>
-          <input type="text" id="allergies" disabled placeholder="List any allergies">
-        </div>
-        <div class="profile-section">
-          <label for="medications">Current Medications</label>
-          <input type="text" id="medications" disabled placeholder="List any medications">
+        
+        <div class="profile-item" id="contactItem">
+          <strong>Contact Number:</strong>
+          <span id="contactValue"></span>
+          <input type="text" id="contactInput" />
         </div>
 
-        <div class="show-info" onclick="toggleInfo()">View Personal Details</div>
-      </div>
-
-      <!-- Full User Info Card -->
-      <div class="profile-right hidden" id="extra-info">
-        <h2 class="profile-title">Personal Information</h2>
-        <div class="edit-indicator" id="personal-edit-indicator">Editing Mode</div>
-        
-        <div class="form-columns">
-          <div class="profile-section">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" disabled placeholder="Enter your full name">
-          </div>
-          <div class="profile-section">
-            <label for="sex">Sex</label>
-            <input type="text" id="sex" disabled placeholder="Enter your sex">
-          </div>
-          <div class="profile-section">
-            <label for="age">Age</label>
-            <input type="number" id="age" disabled placeholder="Enter your age">
-          </div>
-          <div class="profile-section">
-            <label for="birthdate">Date of Birth</label>
-            <input type="text" id="birthdate" disabled placeholder="DD/MM/YYYY">
-          </div>
-          <div class="profile-section">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" disabled placeholder="Enter your email">
-          </div>
-          <div class="profile-section">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" disabled placeholder="Enter your phone number">
-          </div>
-          <div class="profile-section">
-            <label for="address">Address</label>
-            <input type="text" id="address" disabled placeholder="Enter your address">
-          </div>
-          <div class="profile-section">
-            <label for="emergency-contact">Emergency Contact</label>
-            <input type="text" id="emergency-contact" disabled placeholder="Name and phone number">
-          </div>
+        <button class="edit-btn" id="editBtn">Edit Profile</button>
+        <div class="button-group" id="buttonGroup">
+          <button class="save-btn" id="saveBtn">Save Changes</button>
+          <button class="cancel-btn" id="cancelBtn">Cancel</button>
         </div>
-      </div>
-    </div>
-    
-    <!-- Centered Edit Button -->
-    <div style="text-align: center; margin-bottom: 50px;">
-      <button id="edit-btn" onclick="toggleEdit()">Edit Profile</button>
-    </div>
-  </div>
-  
-  <!-- Photo Selection Modal -->
-  <div id="photo-modal" class="modal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closePhotoModal()">&times;</span>
-      <h3 style="text-align: center; margin-bottom: 20px;">Change Profile Photo</h3>
-      
-      <div class="image-preview">
-        <img src="images/1.jpg" alt="Profile Preview" id="preview-image">
-      </div>
-      
-      <div class="upload-options">
-        <label for="photo-upload-modal" class="upload-btn">
-          Upload from device
-          <input type="file" id="photo-upload-modal" accept="image/*" onchange="previewImageModal(event)" style="display: none;">
-        </label>
-        
-        <p style="text-align: center; margin: 10px 0;">Or choose from default images</p>
-        
-        <div class="default-pics">
-          <img src="images/profile1.jpg" alt="Default 1" class="default-pic" onclick="selectDefaultImage('images/profile1.jpg')">
-          <img src="images/profile2.jpg" alt="Default 2" class="default-pic" onclick="selectDefaultImage('images/profile2.jpg')">
-          <img src="images/profile3.jpg" alt="Default 3" class="default-pic" onclick="selectDefaultImage('images/profile3.jpg')">
-          <img src="images/profile4.jpg" alt="Default 4" class="default-pic" onclick="selectDefaultImage('images/profile4.jpg')">
-        </div>
-        
-        <button onclick="applyPhotoChange()" style="margin-top: 20px;">Apply</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Edit mode toggle function
-    function toggleEdit() {
-      const allInputs = document.querySelectorAll('input');
-      const button = document.getElementById('edit-btn');
-      const medInfoCard = document.getElementById('med-info-card');
-      const extraInfo = document.getElementById('extra-info');
-      const medEditIndicator = document.getElementById('med-edit-indicator');
-      const personalEditIndicator = document.getElementById('personal-edit-indicator');
-      const changePhotoBtn = document.querySelector('.change-photo-btn');
-      
-      const isEditing = button.innerText === "Edit Profile";
-
-      // Toggle input fields
-      allInputs.forEach(input => {
-        if (input.id !== 'photo-upload' && input.id !== 'photo-upload-modal') {
-          input.disabled = !isEditing;
-        }
-      });
-
-      // Toggle button text
-      button.innerText = isEditing ? "Save Changes" : "Edit Profile";
-      
-      // Toggle visibility of change photo button
-      changePhotoBtn.style.display = isEditing ? 'flex' : 'none';
-      
-      // Visual feedback for edit mode
-      if (isEditing) {
-        medInfoCard.classList.add('editing-mode');
-        medEditIndicator.style.display = 'inline-block';
-        
-        if (!extraInfo.classList.contains('hidden')) {
-          extraInfo.classList.add('editing-mode');
-          personalEditIndicator.style.display = 'inline-block';
-        }
-        
-        // Show both sections when entering edit mode
-        extraInfo.classList.remove('hidden');
-      } else {
-        // Save the changes (in a real app, you would send this to a server)
-        saveChanges();
-        
-        medInfoCard.classList.remove('editing-mode');
-        extraInfo.classList.remove('editing-mode');
-        medEditIndicator.style.display = 'none';
-        personalEditIndicator.style.display = 'none';
-      }
-    }
-
-    // Toggle info panel visibility
-    function toggleInfo() {
-      const extraInfo = document.getElementById('extra-info');
-      const toggle = document.querySelector('.show-info');
-      
-      extraInfo.classList.toggle('hidden');
-      toggle.innerText = extraInfo.classList.contains('hidden') ? 
-                        'View Personal Details' : 'Hide Personal Details';
-      
-      // Apply editing styles if in edit mode
-      if (document.getElementById('edit-btn').innerText === "Save Changes" && 
-          !extraInfo.classList.contains('hidden')) {
-        extraInfo.classList.add('editing-mode');
-        document.getElementById('personal-edit-indicator').style.display = 'inline-block';
-      }
-    }
-    
-    // Save changes function - would connect to backend in production
-    function saveChanges() {
-      // Here you would normally send data to a server
-      // For now, we'll just show an alert
-      console.log("Changes saved!");
-      
-      // Sample data collection
-      const medicalData = {
-        bloodType: document.getElementById('blood').value,
-        weight: document.getElementById('weight').value,
-        height: document.getElementById('height').value,
-        allergies: document.getElementById('allergies').value,
-        medications: document.getElementById('medications').value
-      };
-      
-      const personalData = {
-        name: document.getElementById('name').value,
-        sex: document.getElementById('sex').value,
-        age: document.getElementById('age').value,
-        birthdate: document.getElementById('birthdate').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        address: document.getElementById('address').value,
-        emergencyContact: document.getElementById('emergency-contact').value
-      };
-      
-      // Get profile image source
-      const profileImageSrc = document.getElementById('profile-image').src;
-      
-      // In a real application, you would send this data to your server
-      console.log("Medical data:", medicalData);
-      console.log("Personal data:", personalData);
-      console.log("Profile image:", profileImageSrc);
-      
-      // Show success message (in a real app, you'd use better feedback)
-      alert("Profile updated successfully!");
-    }
-    
-    // Photo modal functions
-    function openPhotoModal() {
-      // Only allow opening the modal in edit mode
-      if (document.getElementById('edit-btn').innerText === "Save Changes") {
-        document.getElementById('photo-modal').style.display = 'block';
-        // Set the preview image to match the current profile image
-        document.getElementById('preview-image').src = document.getElementById('profile-image').src;
-      }
-    }
-    
-    function closePhotoModal() {
-      document.getElementById('photo-modal').style.display = 'none';
-    }
-    
-    // Handle file upload directly from profile
-    function previewImage(event) {
-      const reader = new FileReader();
-      reader.onload = function() {
-        const output = document.getElementById('profile-image');
-        output.src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-    
-    // Handle file upload in modal
-    function previewImageModal(event) {
-      const reader = new FileReader();
-      reader.onload = function() {
-        const output = document.getElementById('preview-image');
-        output.src = reader.result;
-      };
-      reader.readAsDataURL(event.target.files[0]);
-    }
-    
-    // Select default image in modal
-    function selectDefaultImage(imageSrc) {
-      document.getElementById('preview-image').src = imageSrc;
-      
-      // Highlight the selected default image
-      const defaultPics = document.querySelectorAll('.default-pic');
-      defaultPics.forEach(pic => {
-        if (pic.src.includes(imageSrc)) {
-          pic.style.border = '2px solid #d9534f';
-          pic.style.transform = 'scale(1.1)';
-        } else {
-          pic.style.border = '2px solid transparent';
-          pic.style.transform = 'scale(1)';
-        }
-      });
-    }
-    
-    // Apply the selected image from modal to profile
-    function applyPhotoChange() {
-      const previewImage = document.getElementById('preview-image').src;
-      document.getElementById('profile-image').src = previewImage;
-      closePhotoModal();
-    }
-    
-    // Mobile menu toggle
-    document.getElementById('menu-toggle').addEventListener('click', function() {
-      document.getElementById('nav-menu').classList.toggle('active');
-    });
-    
-    // Handle mobile dropdown menu
     document.addEventListener('DOMContentLoaded', function() {
-      if (window.innerWidth <= 768) {
-        document.getElementById('menu-dropdown-btn').addEventListener('click', function(e) {
-          e.preventDefault();
-          document.getElementById('menu-dropdown').classList.toggle('show');
+      // Mobile menu toggle
+      const menuToggle = document.getElementById('menu-toggle');
+      const navMenu = document.getElementById('nav-menu');
+      
+      if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+          navMenu.classList.toggle('active');
         });
-      } else {
-        // Desktop dropdown hover behavior
-        document.querySelector('.dropdown').addEventListener('mouseenter', function() {
-          document.getElementById('menu-dropdown').style.display = 'block';
+      }
+      
+      // Dropdown on mobile
+      const dropdownBtn = document.getElementById('menu-dropdown-btn');
+      const dropdownContent = document.getElementById('menu-dropdown');
+      
+      if (dropdownBtn && window.innerWidth <= 768) {
+        dropdownBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          dropdownContent.classList.toggle('show');
+        });
+      }
+      
+      // Check if user is logged in
+      const userData = JSON.parse(localStorage.getItem('user_data'));
+      if (!userData) {
+        alert('You must be logged in to view this page');
+        window.location.href = 'login.html';
+        return;
+      }
+      
+      // Display user data
+      displayUserData(userData);
+      
+      // Profile Image Functionality
+      const profileImage = document.getElementById('profileImage');
+      const imageUpload = document.getElementById('imageUpload');
+      const changeImageBtn = document.getElementById('changeImageBtn');
+      
+      // Display user profile image if available
+      if (userData.profile_image) {
+        profileImage.src = userData.profile_image;
+      }
+      
+      changeImageBtn.addEventListener('click', function() {
+        imageUpload.click();
+      });
+      
+      imageUpload.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+            // Display the selected image
+            profileImage.src = e.target.result;
+            
+            // In a real app, you would upload the image to a server here
+            // For demo purposes, we'll save it in localStorage
+            const updatedUserData = {...userData, profile_image: e.target.result};
+            localStorage.setItem('user_data', JSON.stringify(updatedUserData));
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      // Edit profile functionality
+      const editBtn = document.getElementById('editBtn');
+      const saveBtn = document.getElementById('saveBtn');
+      const cancelBtn = document.getElementById('cancelBtn');
+      const buttonGroup = document.getElementById('buttonGroup');
+      
+      editBtn.addEventListener('click', function() {
+        // Toggle edit mode
+        editBtn.style.display = 'none';
+        buttonGroup.style.display = 'flex';
+        
+        // Show input fields
+        const profileItems = document.querySelectorAll('.profile-item');
+        profileItems.forEach(item => {
+          item.classList.add('edit-mode');
         });
         
-        document.querySelector('.dropdown').addEventListener('mouseleave', function() {
-          document.getElementById('menu-dropdown').style.display = 'none';
+        // Populate input fields with current values
+        document.getElementById('emailInput').value = userData.email;
+        document.getElementById('usernameInput').value = userData.username;
+        document.getElementById('firstNameInput').value = userData.first_name;
+        document.getElementById('lastNameInput').value = userData.last_name;
+        document.getElementById('ageInput').value = userData.age;
+        document.getElementById('contactInput').value = userData.contact_number;
+      });
+      
+      saveBtn.addEventListener('click', async function() {
+        // Get updated values
+        const updatedData = {
+          email: document.getElementById('emailInput').value.trim(),
+          username: document.getElementById('usernameInput').value.trim(),
+          first_name: document.getElementById('firstNameInput').value.trim(),
+          last_name: document.getElementById('lastNameInput').value.trim(),
+          age: document.getElementById('ageInput').value,
+          contact_number: document.getElementById('contactInput').value.trim()
+        };
+        
+        try {
+          // In a real app, you would send this to your API
+          // For this example, we'll just update localStorage
+          
+          // Here's how you would make the API call in a real application:
+          /*
+          const response = await fetch('http://127.0.0.1:8000/api/update-profile/', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${userData.token}` // Assuming you have a token
+            },
+            body: JSON.stringify(updatedData)
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            localStorage.setItem('user_data', JSON.stringify(data.user_data));
+            alert('Profile updated successfully!');
+          } else {
+            const error = await response.json();
+            alert('Update failed: ' + error.message);
+          }
+          */
+          
+          // For demo purposes, just update localStorage
+          const updatedUserData = {...userData, ...updatedData};
+          localStorage.setItem('user_data', JSON.stringify(updatedUserData));
+          
+          // Exit edit mode and display updated data
+          exitEditMode();
+          displayUserData(updatedUserData);
+          
+          alert('Profile updated successfully!');
+        } catch (error) {
+          console.error('Update error:', error);
+          alert('Failed to update profile. Please try again.');
+        }
+      });
+      
+      cancelBtn.addEventListener('click', function() {
+        exitEditMode();
+      });
+      
+      function exitEditMode() {
+        // Hide edit mode
+        editBtn.style.display = 'block';
+        buttonGroup.style.display = 'none';
+        
+        // Hide input fields
+        const profileItems = document.querySelectorAll('.profile-item');
+        profileItems.forEach(item => {
+          item.classList.remove('edit-mode');
         });
       }
       
-      // Hide the change photo button initially (only visible in edit mode)
-      document.querySelector('.change-photo-btn').style.display = 'none';
-      
-      // Optional: Load saved data
-      loadSavedData();
-    });
-    
-    // Close modal when clicking outside of it
-    window.onclick = function(event) {
-      const modal = document.getElementById('photo-modal');
-      if (event.target == modal) {
-        closePhotoModal();
+      function displayUserData(userData) {
+        document.getElementById('emailValue').textContent = userData.email;
+        document.getElementById('usernameValue').textContent = userData.username;
+        document.getElementById('firstNameValue').textContent = userData.first_name;
+        document.getElementById('lastNameValue').textContent = userData.last_name;
+        document.getElementById('ageValue').textContent = userData.age;
+        document.getElementById('contactValue').textContent = userData.contact_number;
       }
-    }
-    
-    // Optional: Load saved data from localStorage or server
-    function loadSavedData() {
-      // In a real application, you would fetch this data from your server
-      // This is just a placeholder example using hardcoded values
-      document.getElementById('blood').value = "O+";
-      document.getElementById('weight').value = "70";
-      document.getElementById('height').value = "175";
-      document.getElementById('name').value = "John Doe";
-      // Additional fields would be populated here
-    }
+      
+      // Logout functionality from dropdown
+      const logoutBtn = document.querySelector('.logout-btn');
+      if (logoutBtn) {
+        logoutBtn.addEventLisDener('click', function(e) {
+          localStorage.removeItem('user_data');
+          window.location.href = 'login.html';
+        });
+      }
+    });
   </script>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Show alert banner on page load
+    const alertBanner = document.getElementById('alertBanner');
+    alertBanner.style.display = 'block';
+    
+    // Hide banner after 5 seconds
+    setTimeout(() => {
+      alertBanner.style.display = 'none';
+    }, 5000);
+    
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    
+    menuToggle.addEventListener('click', function() {
+      navMenu.classList.toggle('active');
+    });
+    
+    // Mobile dropdown toggle
+    const dropdownBtn = document.getElementById('menu-dropdown-btn');
+    const menuDropdown = document.getElementById('menu-dropdown');
+    
+    if (window.innerWidth <= 768) {
+      dropdownBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        menuDropdown.classList.toggle('show');
+      });
+    } else {
+      // For desktop, show dropdown on hover
+      document.querySelector('.dropdown').addEventListener('mouseenter', function() {
+        menuDropdown.style.display = 'block';
+      });
+      
+      document.querySelector('.dropdown').addEventListener('mouseleave', function() {
+        menuDropdown.style.display = 'none';
+      });
+    }
+    
+    // Set up card click events
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+      card.addEventListener('click', function() {
+        // Remove selected class from all cards
+        cards.forEach(c => c.classList.remove('selected'));
+        
+        // Add selected class to clicked card
+        this.classList.add('selected');
+        
+        // Open corresponding modal
+        const disasterType = this.getAttribute('data-disaster');
+        const modal = document.getElementById(`${disasterType}Modal`);
+        if (modal) {
+          modal.classList.add('active');
+        }
+      });
+    });
+    
+    // Set up close modal buttons
+    const closeButtons = document.querySelectorAll('.close-modal');
+    closeButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const modal = this.closest('.modal-overlay');
+        modal.classList.remove('active');
+      });
+    });
+    
+    // Close modal when clicking outside
+    const modals = document.querySelectorAll('.modal-overlay');
+    modals.forEach(modal => {
+      modal.addEventListener('click', function(event) {
+        if (event.target === this) {
+          this.classList.remove('active');
+        }
+      });
+    });
+    
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape') {
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+          activeModal.classList.remove('active');
+        }
+      }
+    });
+
+    // Auto-check if user has viewed safety instructions
+    let safetyInstructionsViewed = localStorage.getItem('safetyInstructionsViewed');
+    
+    if (!safetyInstructionsViewed) {
+      // Show earthquake modal automatically after 2 seconds on first visit
+      setTimeout(() => {
+        document.getElementById('earthquakeModal').classList.add('active');
+        localStorage.setItem('safetyInstructionsViewed', 'true');
+      }, 2000);
+    }
+  });
+</script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+const synth = window.speechSynthesis;
+
+document.querySelectorAll('.modal').forEach((modal, index) => {
+  // Create container for buttons
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'speech-controls';
+  buttonContainer.style.display = 'flex';
+  buttonContainer.style.gap = '10px';
+  buttonContainer.style.marginTop = '20px';
+  
+  // Create buttons
+  const playBtn = document.createElement('button');
+  const stopBtn = document.createElement('button');
+  
+  // Use text instead of emojis
+  playBtn.innerHTML = '<span class="icon">▷ </span> Play';
+  stopBtn.innerHTML = '<span class="icon">◻️</span> Stop';
+  
+  // Apply styles to buttons
+  [playBtn, stopBtn].forEach(btn => {
+    btn.style.display = 'flex';
+    btn.style.alignItems = 'center';
+    btn.style.justifyContent = 'center';
+    btn.style.padding = '8px 16px';
+    btn.style.border = 'none';
+    btn.style.borderRadius = '6px';
+    btn.style.cursor = 'pointer';
+    btn.style.fontFamily = 'Arial, sans-serif';
+    btn.style.fontWeight = 'bold';
+    btn.style.transition = 'all 0.2s ease';
+    btn.style.minWidth = '100px';
+  });
+  
+  // Individual button styles
+  playBtn.style.backgroundColor = '#4CAF50';
+  playBtn.style.color = 'white';
+  stopBtn.style.backgroundColor = '#f44336';
+  stopBtn.style.color = 'white';
+  
+  // Hover effects
+  playBtn.onmouseover = function() { this.style.opacity = '0.9'; };
+  playBtn.onmouseout = function() { this.style.opacity = '1'; };
+  stopBtn.onmouseover = function() { this.style.opacity = '0.9'; };
+  stopBtn.onmouseout = function() { this.style.opacity = '1'; };
+  
+  // Style for the icons
+  const icons = playBtn.querySelector('.icon'), stopIcon = stopBtn.querySelector('.icon');
+  [icons, stopIcon].forEach(icon => {
+    if (icon) {
+      icon.style.fontWeight = 'bold';
+      icon.style.marginRight = '6px';
+      icon.style.fontSize = '12px';
+    }
+  });
+  
+  // Add buttons to container
+  buttonContainer.appendChild(playBtn);
+  buttonContainer.appendChild(stopBtn);
+  
+  // Add container to modal
+  modal.appendChild(buttonContainer);
+  
+  // Function to extract and read text
+  function speakModalContent() {
+    let textToRead = '';
+    
+    const headers = modal.querySelectorAll('.modal-content h4');
+    const lists = modal.querySelectorAll('.modal-content ul');
+    
+    headers.forEach((header, i) => {
+      textToRead += header.textContent + '. ';
+      if (lists[i]) {
+        const items = lists[i].querySelectorAll('li');
+        items.forEach((item) => {
+          textToRead += item.textContent + '. ';
+        });
+      }
+    });
+    
+    const utterance = new SpeechSynthesisUtterance(textToRead);
+    utterance.rate = 1;
+    
+    // Visual feedback when speaking
+    playBtn.style.backgroundColor = '#2E7D32';
+    playBtn.disabled = true;
+    playBtn.style.cursor = 'not-allowed';
+    playBtn.innerHTML = '<span class="icon">►</span> Playing...';
+    
+    // Reset button when done
+    utterance.onend = function() {
+      playBtn.style.backgroundColor = '#4CAF50';
+      playBtn.disabled = false;
+      playBtn.style.cursor = 'pointer';
+      playBtn.innerHTML = '<span class="icon">►</span> Play';
+    };
+    
+    synth.speak(utterance);
+  }
+  
+  // Event listeners
+  playBtn.addEventListener('click', () => {
+    if (!synth.speaking) {
+      speakModalContent();
+    }
+  });
+  
+  stopBtn.addEventListener('click', () => {
+    if (synth.speaking) {
+      synth.cancel();
+      playBtn.style.backgroundColor = '#4CAF50';
+      playBtn.disabled = false;
+      playBtn.style.cursor = 'pointer';
+      playBtn.innerHTML = '<span class="icon">►</span> Play';
+    }
+  });
+});
+});
+
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const logoutButton = document.querySelector('.logout-btn');
+
+  // Handle logout
+  if (logoutButton) {
+    logoutButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      // Update login state
+      localStorage.setItem('isLoggedIn', 'false');
+      // Broadcast logout event
+      localStorage.setItem('logout-event', Date.now());
+      // Redirect to login
+      window.location.href = 'login.html';
+    });
+  }
+
+  // Listen for storage events (login/logout across tabs)
+  window.addEventListener('storage', function(event) {
+    if (event.key === 'logout-event') {
+      // Another tab logged out
+      window.location.href = 'login.html';
+    }
+    if (event.key === 'login-event') {
+      // Another tab logged in
+      window.location.reload(); // Reload current tab to reflect login
+    }
+  });
+
+  // Redirect if not logged in
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  if (isLoggedIn !== 'true' && !window.location.href.includes('login.html')) {
+    window.location.href = 'login.html';
+  }
+});
+</script>
 </body>
 </html>

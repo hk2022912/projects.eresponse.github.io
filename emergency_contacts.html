@@ -775,7 +775,7 @@
     });
     
     // Close on ESC key
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e) => { 
       if (e.key === 'Escape' && modal.style.display === 'flex') {
         closeModal();
       }
@@ -801,7 +801,66 @@
       document.querySelector('.dropdown').addEventListener('mouseleave', function() {
         menuDropdown.style.display = 'none';
       });
+      // 🔐 Logout logic
+    document.querySelector('.logout-btn').addEventListener('click', function(e) {
+      e.preventDefault();
+      sessionStorage.removeItem('isLoggedIn');
+      if (typeof BroadcastChannel !== 'undefined') {
+        const authChannel = new BroadcastChannel('auth');
+        authChannel.postMessage('logout');
+      }
+      window.location.href = 'login.html';
+    });
+
+    // 👂 Cross-tab logout sync
+    if (typeof BroadcastChannel !== 'undefined') {
+      const authChannel = new BroadcastChannel('auth');
+      authChannel.onmessage = event => {
+        if (event.data === 'logout') {
+          sessionStorage.removeItem('isLoggedIn');
+          window.location.href = 'login.html';
+        }
+      };
+    }
     }
   </script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const logoutButton = document.querySelector('.logout-btn');
+
+    // Handle logout
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        // Update login state
+        localStorage.setItem('isLoggedIn', 'false');
+        // Broadcast logout event
+        localStorage.setItem('logout-event', Date.now());
+        // Redirect to login
+        window.location.href = 'login.html';
+      });
+    }
+
+    // Listen for storage events (login/logout across tabs)
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'logout-event') {
+        // Another tab logged out
+        window.location.href = 'login.html';
+      }
+      if (event.key === 'login-event') {
+        // Another tab logged in
+        window.location.reload(); // Reload current tab to reflect login
+      }
+    });
+
+    // Redirect if not logged in
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn !== 'true' && !window.location.href.includes('login.html')) {
+      window.location.href = 'login.html';
+    }
+  });
+</script>
+
 </body>
 </html>
