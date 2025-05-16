@@ -64,6 +64,7 @@
               <label for="password">Password</label>
               <input type="password" id="password" name="password" required />
               <i id="toggle-password" class="fas fa-eye-slash"></i>
+              <div id="password-error" style="color: red; font-size: 0.85rem;"></div>
             </div>
             <div class="form-group">
               <label for="confirm-password">Confirm Password</label>
@@ -80,6 +81,7 @@
   </main>
 
   <script>
+    // Toggle password visibility
     document.getElementById('toggle-password').addEventListener('click', function () {
       const password = document.getElementById('password');
       password.type = password.type === 'password' ? 'text' : 'password';
@@ -94,6 +96,7 @@
       this.classList.toggle('fa-eye-slash');
     });
 
+    // Submit registration form
     document.getElementById('register-form').addEventListener('submit', async function (e) {
       e.preventDefault();
 
@@ -105,6 +108,17 @@
       const contact_number = document.getElementById('contact_number').value.trim();
       const password = document.getElementById('password').value;
       const rePassword = document.getElementById('confirm-password').value;
+
+      // Strong password check
+      const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+      const passwordError = document.getElementById('password-error');
+
+      if (!passwordPattern.test(password)) {
+        passwordError.textContent = "Password must be at least 8 characters and include uppercase, lowercase, and a number.";
+        return;
+      } else {
+        passwordError.textContent = "";
+      }
 
       if (password !== rePassword) {
         alert('Passwords do not match!');
